@@ -156,9 +156,10 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const user = false;
+  const user = true;
 
   return (
     <div className="h-16 dark:bg-[#0A0A0A] bg-white border-b dark:border-gray-800 border-gray-200 fixed top-0 left-0 right-0 z-10">
@@ -184,8 +185,12 @@ const Navbar = () => {
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <DropdownMenuItem>My Learning</DropdownMenuItem>
-                  <DropdownMenuItem>Edit Profile</DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link to="/my-Learning">My Learning</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link to="/profile">Edit Profile</Link>
+                  </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>Log out</DropdownMenuItem>

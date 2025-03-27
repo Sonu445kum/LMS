@@ -4,6 +4,8 @@ import HeroSection from './pages/Students/HeroSection';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MainLayout from './Layout/MainLayout';
 import Courses from './pages/Students/Courses';
+import MyLearning from './pages/Students/MyLearning';
+import Profile from './pages/Students/Profile';
 
 const appRouter = createBrowserRouter([
   {
@@ -24,6 +26,14 @@ const appRouter = createBrowserRouter([
         path: "login",
         element: <Login />,
       },
+      {
+        path:"my-Learning",
+        element:<MyLearning/>
+      },
+      {
+        path:"profile",
+        element:<Profile/>
+      }
     ],
   },
 ]);
