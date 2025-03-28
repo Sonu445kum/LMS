@@ -86,4 +86,43 @@ export const login = async(req,res)=>{
             message:"Failed to login"
         })
     }
+};
+
+//logout
+export const logout = async (__dirname,res)=>{
+    try {
+        return res.status(200).cookie('token',"",{maxAge:0}).json({
+            success:true,
+            message:"Logged out successfully"
+        })
+    } catch (error) {
+       console.log(error);
+       return res.status(500).json({
+        success:false,
+        message:"Failed to logout"
+       }) 
+    }
+};
+
+//getUserProfile;
+export const getUserProfile = async (req,res)=>{
+    try {
+       //get userId from the body
+       const userId = req.id;
+       //find user by userId
+       const user = await User.findById(userId).select("-password");
+       if(!user){
+        return res.status(404).json({
+            success:false,
+            message:"User not found"
+            })
+        }
+        //return user
+        return res.status(200).json({
+            success:true,
+            user
+        })
+    } catch (error) {
+        console.log(error);
+    }
 }
