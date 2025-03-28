@@ -1,128 +1,207 @@
 import { User } from "../Models/User.Model.js";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../Utils/GenerateToken.js";
-export const register = async(req,res)=>{
+import { deleteMediaFromCloudinary, uploadMedia } from "../Utils/Cloudinary.js";
+
+// 🛠 Register User
+export const register = async (req, res) => {
     try {
-        const {name,email,password} = req.body;
-        //check for filed
-        if(!name || !email || !password){
+        const { name, email, password } = req.body;
+
+        // 🔴 Check if all fields are provided
+        if (!name || !email || !password) {
             return res.status(400).json({
-                success:false,
-                message:"Please fill in all fields"})
+                success: false,
+                message: "Please fill in all fields",
+            });
         }
-        //check if email is valid
-        const user = await User.findOne({email});
-        if(user){
+
+        // 🔴 Check if email is already in use
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
             return res.status(400).json({
-                success:false,
-                message:"Email already in use"})
+                success: false,
+                message: "Email already in use",
+            });
         }
-        //hash password
+
+        // 🔒 Hash Password
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        //create user
-         const newUser = await User.create({
+        // ✅ Create New User
+        const newUser = await User.create({
             name,
             email,
-            password:hashedPassword
-        });
-        res.status(201).json({
-            newUser,
-            success:true,
-            message:"User created successfully"
+            password: hashedPassword,
         });
 
+        return res.status(201).json({
+            success: true,
+            message: "User created successfully",
+            user: newUser,
+        });
 
     } catch (error) {
-        console.log(error);
+        console.error("Register Error:", error);
         return res.status(500).json({
-            success:false,
-            message:"Failed to create user"
-        })
+            success: false,
+            message: "Failed to create user",
+        });
     }
 };
 
-//login
-export const login = async(req,res)=>{
+// 🛠 Login User
+export const login = async (req, res) => {
     try {
-        const {email,password} = req.body;
+        const { email, password } = req.body;
 
-        //check fields
-        if(!email || !password){
+        // 🔴 Check if all fields are provided
+        if (!email || !password) {
             return res.status(400).json({
-                success:false,
-                message:"All fields are required"
-            })
+                success: false,
+                message: "All fields are required",
+            });
         }
-        //check if user exists
-        const user = await User.findOne({email});
-        if(!user){
+
+        // 🔴 Check if user exists
+        const user = await User.findOne({ email });
+        if (!user) {
             return res.status(400).json({
-                success:false,
-                message:"Invalid email"
-            })
+                success: false,
+                message: "Invalid email",
+            });
         }
-        //compare password
-        const isMatch = await bcrypt.compare(password,user.password);
-        if(!isMatch){
+
+        // 🔒 Compare Password
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
             return res.status(400).json({
-                success:false,
-                message:"Invalid password"
-                })
+                success: false,
+                message: "Invalid password",
+            });
         }
-        //generate token
-        generateToken(res,user,`Welcome back ${user.name}`);
-        res.status(200).json({
-            user,
-            success:true,
-            message:"Logged in successfully",
-        })
 
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({
-            success:false,
-            message:"Failed to login"
-        })
-    }
-};
+        // ✅ Generate Token
+        generateToken(res, user, `Welcome back ${user.name}`);
 
-//logout
-export const logout = async (__dirname,res)=>{
-    try {
-        return res.status(200).cookie('token',"",{maxAge:0}).json({
-            success:true,
-            message:"Logged out successfully"
-        })
-    } catch (error) {
-       console.log(error);
-       return res.status(500).json({
-        success:false,
-        message:"Failed to logout"
-       }) 
-    }
-};
-
-//getUserProfile;
-export const getUserProfile = async (req,res)=>{
-    try {
-       //get userId from the body
-       const userId = req.id;
-       //find user by userId
-       const user = await User.findById(userId).select("-password");
-       if(!user){
-        return res.status(404).json({
-            success:false,
-            message:"User not found"
-            })
-        }
-        //return user
         return res.status(200).json({
-            success:true,
-            user
-        })
+            success: true,
+            message: "Logged in successfully",
+            user,
+        });
+
     } catch (error) {
-        console.log(error);
+        console.error("Login Error:", error);
+        return res.status(500).json({
+            success: false,
+            message: "Failed to login",
+        });
     }
-}
+};
+
+// 🛠 Logout User
+export const logout = async (req, res) => {
+    try {
+        return res.status(200).cookie("token", "", { maxAge: 0 }).json({
+            success: true,
+            message: "Logged out successfully",
+        });
+    } catch (error) {
+        console.error("Logout Error:", error);
+        return res.status(500).json({
+            success: false,
+            message: "Failed to logout",
+        });
+    }
+};
+
+// 🛠 Get User Profile
+export const getUserProfile = async (req, res) => {
+    try {
+        // ✅ Get user ID from request
+        const userId = req.id;
+
+        // 🔴 Find user by ID
+        const user = await User.findById(userId).select("-password");
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found",
+            });
+        }
+
+        // ✅ Return user profile
+        return res.status(200).json({
+            success: true,
+            user,
+        });
+
+    } catch (error) {
+        console.error("Profile Fetch Error:", error);
+        return res.status(500).json({
+            success: false,
+            message: "Failed to fetch profile",
+        });
+    }
+};
+
+// 🛠 Update User Profile
+export const updateProfile = async (req, res) => {
+    try {
+        const userId = req.id;
+        const { name } = req.body;
+        const profilePhoto = req.file; // Uploaded file
+
+        // 🔴 Check if user exists
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found",
+            });
+        }
+
+        let photoUrl = user.photoUrl; // Default to existing photo
+
+        // 🔄 If a new photo is uploaded
+        if (profilePhoto) {
+            try {
+                // 🗑 Delete old photo from Cloudinary if it exists
+                if (user.photoUrl) {
+                    const publicId = user.photoUrl.split("/").pop().split(".")[0];
+                    await deleteMediaFromCloudinary(publicId);
+                }
+
+                // ☁️ Upload new photo
+                const cloudResponse = await uploadMedia(profilePhoto.path);
+                photoUrl = cloudResponse.secure_url;
+            } catch (cloudError) {
+                console.error("Cloudinary Error:", cloudError);
+                return res.status(500).json({
+                    success: false,
+                    message: "Failed to upload new profile picture",
+                });
+            }
+        }
+
+        // 🔄 Update user profile
+        const updatedData = { name };
+        if (photoUrl) updatedData.photoUrl = photoUrl;
+
+        const updatedUser = await User.findByIdAndUpdate(userId, updatedData, { new: true }).select("-password");
+
+        return res.status(200).json({
+            success: true,
+            user: updatedUser,
+            message: "Profile Updated Successfully",
+        });
+
+    } catch (error) {
+        console.error("Profile Update Error:", error);
+        return res.status(500).json({
+            success: false,
+            message: "Error updating profile",
+        });
+    }
+};

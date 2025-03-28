@@ -89,25 +89,43 @@ export const authApi = createApi({
                     const { data } = await queryFulfilled;
                     if (data?.user) {
                         dispatch(userLoggedIn({ user: data.user }));
-                        console.log("User logged in:", data.user);
+                        console.log("✅ User logged in:", data.user);
                     } else {
-                        console.error("Login response missing user data", data);
+                        console.error("❌ Login response missing user data", data);
                     }
                 } catch (error) {
-                    console.error("Login error:", error?.error?.data || error);
+                    console.error("❌ Login error:", error?.error?.data || error);
                 }
             },
         }),
 
-        // ✅ Fixed: Moved `loadUser` query outside of `loginUser`
+        // ✅ Load user profile
         loadUser: builder.query({
             query: () => ({
                 url: "profile",
                 method: "GET",
             }),
         }),
+
+        // ✅ Fixed: Properly handle multipart/form-data for updating profile
+        updateUser: builder.mutation({
+            query: (formData) => ({
+                url: "profile/update",
+                method: "PUT",
+                body: formData,
+                headers: {
+                    "Accept": "application/json", 
+                },
+            }),
+        }),
     }),
 });
 
-export const { useRegisterUserMutation, useLoginUserMutation, useLoadUserQuery } = authApi;
+export const {
+    useRegisterUserMutation,
+    useLoginUserMutation,
+    useLoadUserQuery,
+    useUpdateUserMutation
+} = authApi;
+
 
