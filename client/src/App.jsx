@@ -26,6 +26,7 @@ const appRouter = createBrowserRouter([
         path: "login",
         element: <Login />,
       },
+      
       {
         path:"my-Learning",
         element:<MyLearning/>

@@ -28,7 +28,7 @@
 // import { Separator } from "@radix-ui/react-dropdown-menu";
 // const Navbar = () => {
 //   const user = false;
- 
+
 //   return (
 //     <div className="h-16 dark:bg-[#0A0A0A] bg-white border-b dark:border-b-gray-800 border-b-gray-200 fixed top-0 left-0 right-0 duration-300 z-10">
 //       {/* Desktop */}
@@ -130,10 +130,9 @@
 //   );
 // };
 
-
-// new code 
-import { Menu, School } from "lucide-react";
-import React from "react";
+// new code
+import { Menu, School, Store } from "lucide-react";
+import React, { useEffect } from "react";
 import { Button } from "../button";
 import {
   DropdownMenu,
@@ -156,10 +155,37 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useLogoutUserMutation } from "@/Features/Api/authApi"; // ✅ Use correct hook
+import { toast } from "sonner";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
-  const user = true;
+  const { user } = useSelector((store) => store.auth); // Replace with actual user state from Redux/auth context
+  const navigate = useNavigate();
+  // console.log(user);
+  // ✅ Use correct mutation for logout
+  const [logoutUser, { data, isSuccess, isError, error }] =
+    useLogoutUserMutation();
+
+  // ✅ Logout Handler
+  const logoutHandler = async () => {
+    try {
+      await logoutUser().unwrap(); // ✅ Ensure error handling
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
+  };
+
+  // ✅ Handle Logout Success or Error
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success(data?.message || "Logout Successfully");
+      navigate("/login");
+    } else if (isError) {
+      toast.error(error?.data?.message || "Logout failed!");
+    }
+  }, [isSuccess, isError, data, error, navigate]);
 
   return (
     <div className="h-16 dark:bg-[#0A0A0A] bg-white border-b dark:border-gray-800 border-gray-200 fixed top-0 left-0 right-0 z-10">
@@ -177,7 +203,10 @@ const Navbar = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Avatar>
-                  <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                  <AvatarImage
+                    src={user?.photoUrl || "https://github.com/shadcn.png"}
+                    alt="@shadcn"
+                  />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
@@ -193,14 +222,29 @@ const Navbar = () => {
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Log out</DropdownMenuItem>
-                <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={logoutHandler}
+                  className="cursor-pointer text-red-500"
+                >
+                  Log out
+                </DropdownMenuItem>
+                {/* ✅ Add Role */}
+                {user?.role === "instructor" && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>
+                      <Link to="/dashboard">Dashboard</Link>
+                    </DropdownMenuItem>
+                  </>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
             <div className="flex items-center gap-2">
-              <Button variant="outline">Login</Button>
-              <Button>Signup</Button>
+              <Button variant="outline" onClick={() => navigate("/login")}>
+                Login
+              </Button>
+              <Button onClick={() => navigate("/login")}>Signup</Button>
             </div>
           )}
           <DarkMode />
@@ -209,7 +253,7 @@ const Navbar = () => {
         {/* Mobile Navbar */}
         <div className="md:hidden flex items-center gap-4">
           <DarkMode />
-          <MobileNavbar />
+          <MobileNavbar logoutHandler={logoutHandler} />
         </div>
       </div>
     </div>
@@ -218,14 +262,18 @@ const Navbar = () => {
 
 export default Navbar;
 
-// Mobile Navbar
-const MobileNavbar = () => {
-  const role = "instructor";
+// ✅ Mobile Navbar
+const MobileNavbar = ({ logoutHandler }) => {
+  const role = "instructor"; // Replace with actual user role
 
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button size="icon" className="rounded-full bg-gray-200 hover:bg-gray-300" variant="outline">
+        <Button
+          size="icon"
+          className="rounded-full bg-gray-200 hover:bg-gray-300"
+          variant="outline"
+        >
           <Menu />
         </Button>
       </SheetTrigger>
@@ -234,9 +282,15 @@ const MobileNavbar = () => {
           <SheetTitle className="text-xl font-bold">LearnLofts</SheetTitle>
         </SheetHeader>
         <nav className="mt-4 flex flex-col gap-4 text-lg">
-          <span className="cursor-pointer">My Learning</span>
-          <span className="cursor-pointer">Edit Profile</span>
-          <span className="cursor-pointer text-red-500">Log Out</span>
+          <Link to="/my-Learning" className="cursor-pointer">
+            My Learning
+          </Link>
+          <Link to="/profile" className="cursor-pointer">
+            Edit Profile
+          </Link>
+          <span className="cursor-pointer text-red-500" onClick={logoutHandler}>
+            Log Out
+          </span>
         </nav>
         {role === "instructor" && (
           <SheetFooter className="mt-auto">
@@ -249,4 +303,3 @@ const MobileNavbar = () => {
     </Sheet>
   );
 };
-

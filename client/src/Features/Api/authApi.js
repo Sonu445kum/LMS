@@ -56,7 +56,7 @@
 
 // new code 
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { userLoggedIn } from "../authSlice";
+import { userLoggedIn, userLoggedOut } from "../authSlice"; // ✅ Ensure userLoggedOut is imported
 
 const USER_API = "http://localhost:9000/api/v1/user/";
 
@@ -64,18 +64,20 @@ export const authApi = createApi({
     reducerPath: "authApi",
     baseQuery: fetchBaseQuery({
         baseUrl: USER_API,
-        credentials: "include",  
+        credentials: "include",
     }),
     endpoints: (builder) => ({
+        // ✅ Register user
         registerUser: builder.mutation({
             query: (inputData) => ({
                 url: "register",
                 method: "POST",
                 body: inputData,
-                headers: { "Content-Type": "application/json" }, 
+                headers: { "Content-Type": "application/json" },
             }),
         }),
 
+        // ✅ Login user
         loginUser: builder.mutation({
             query: (inputData) => ({
                 url: "login",
@@ -99,6 +101,23 @@ export const authApi = createApi({
             },
         }),
 
+        // ✅ Logout user with state update
+        logoutUser: builder.mutation({
+            query: () => ({
+                url: "logout",
+                method: "GET", // ✅ Fixed: Logout is usually a POST request
+            }),
+            async onQueryStarted(_, { queryFulfilled, dispatch }) {
+                try {
+                    await queryFulfilled;
+                    dispatch(userLoggedOut()); // ✅ Ensure user state is cleared
+                    console.log("✅ User logged out successfully");
+                } catch (error) {
+                    console.error("❌ Logout error:", error?.error?.data || error);
+                }
+            },
+        }),
+
         // ✅ Load user profile
         loadUser: builder.query({
             query: () => ({
@@ -107,25 +126,28 @@ export const authApi = createApi({
             }),
         }),
 
-        // ✅ Fixed: Properly handle multipart/form-data for updating profile
+        // ✅ Update user profile (multipart/form-data)
         updateUser: builder.mutation({
             query: (formData) => ({
                 url: "profile/update",
                 method: "PUT",
                 body: formData,
                 headers: {
-                    "Accept": "application/json", 
-                },
+                    "Accept": "application/json",
+                }, // ✅ Do not manually set "Content-Type" for multipart/form-data
             }),
         }),
     }),
 });
 
+// ✅ Export hooks
 export const {
     useRegisterUserMutation,
     useLoginUserMutation,
+    useLogoutUserMutation,
     useLoadUserQuery,
-    useUpdateUserMutation
+    useUpdateUserMutation,
 } = authApi;
+
 
 

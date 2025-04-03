@@ -182,7 +182,7 @@ const Profile = () => {
                         {/* Avatar */}
                         <div className="flex flex-col items-center">
                             <Avatar className="h-24 w-24 md:h-32 md:w-32 mb-4">
-                                <AvatarImage src={userData?.photoUrl || "https://github.com/shadcn.png"} alt={userData?.name} />
+                                <AvatarImage src={userData.photoUrl || "https://github.com/shadcn.png"} alt={userData.name} />
                                 <AvatarFallback>CN</AvatarFallback>
                             </Avatar>
                         </div>
