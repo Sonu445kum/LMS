@@ -5,6 +5,7 @@ const COURSE_API ="http://localhost:9000/api/v1/course";
 
 export const courseApi =createApi({
     reducerPath: "courseApi",
+    tagTypes:['Refetch_Creator_Courses'],
     baseQuery:fetchBaseQuery({
         baseUrl:COURSE_API,
         credentials:"include",
@@ -19,10 +20,22 @@ export const courseApi =createApi({
                     courseTitle,
                     category
                 },
-            })
-        })
-    })
+            }),
+            //response
+            invalidatesTags:["Refetch_Creator_Courses"]
+        }),
+        //get all courses
+        getCreatorCourse:builder.query({
+            query:()=>({
+                url:"",
+                method:"GET",
+
+            }),
+            //response
+            providesTags:["Refetch_Creator_Courses"]
+        }),
+    }),
 })
 
 //export
-export const {useCreateCourseMutation} = courseApi;
+export const {useCreateCourseMutation,useGetCreatorCourseQuery} = courseApi;
