@@ -101,6 +101,22 @@ export const courseApi = createApi({
       }),
     }),
 
+    //create Lecture
+    createLecture:builder.mutation({
+        query:({lectureTitle,courseId})=>({
+            url:`/${courseId}/lecture`,
+            method:"POST",
+            body:{lectureTitle}
+        })
+    }),
+    //get all lectures
+    getCourseLecture:builder.query({
+        query:(courseId)=>({
+            url:`/${courseId}/lecture`,
+            method:"GET",
+        }),
+    })
+
   }),
 });
 
@@ -109,5 +125,7 @@ export const {
   useCreateCourseMutation,
   useGetCreatorCourseQuery,
   useEditCourseMutation,
-  useGetCourseByIdQuery
+  useGetCourseByIdQuery,
+  useCreateLectureMutation,
+  useGetCourseLectureQuery
 } = courseApi;
