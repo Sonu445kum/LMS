@@ -222,6 +222,10 @@
 
 
 // new code 
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEditCourseMutation, useGetCourseByIdQuery } from "@/Features/Api/courseApi";
+import { toast } from "sonner";
 import RichTextEditor from "@/components/RichTextEditor";
 import { Button } from "@/components/ui/button";
 import {
@@ -233,7 +237,6 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import React, { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -244,7 +247,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Loader2 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 const CourseTab = () => {
   const [input, setInput] = useState({
@@ -257,22 +259,47 @@ const CourseTab = () => {
     courseThumbnail: "",
   });
 
-  const [previewThumbnail, setPreviewThumbnail] = useState("");
+  const { courseId } = useParams();
   const navigate = useNavigate();
+  const [previewThumbnail, setPreviewThumbnail] = useState("");
+  const [editCourse, { data, isLoading, isSuccess, error }] = useEditCourseMutation();
+  const {
+    data: courseByIdData,
+    isLoading: courseByIdLoading,
+    isError: courseByIdError,
+    isSuccess: courseByIdSuccess,
+  } = useGetCourseByIdQuery(courseId ,{refetchOnMountOrArgChange: true});
+
   const isPublished = true;
-  const isLoading = false;
+
+  const course = courseByIdData?.course;
+
+  useEffect(() => {
+    if (course) {
+      setInput({
+        courseTitle: course.courseTitle,
+        subTitle: course.subTitle,
+        description: course.description,
+        category: course.category,
+        courseLevel: course.courseLevel,
+        coursePrice: course.coursePrice,
+        courseThumbnail: "",
+      });
+      setPreviewThumbnail(course.thumbnailUrl); // Set existing thumbnail preview
+    }
+  }, [course]);
 
   const changeEventHandler = (e) => {
     const { name, value } = e.target;
-    setInput({ ...input, [name]: value });
+    setInput((prev) => ({ ...prev, [name]: value }));
   };
 
   const selectedCategoryHandler = (value) => {
-    setInput({ ...input, category: value });
+    setInput((prev) => ({ ...prev, category: value }));
   };
 
   const selectedCourseLevelHandler = (value) => {
-    setInput({ ...input, courseLevel: value });
+    setInput((prev) => ({ ...prev, courseLevel: value }));
   };
 
   const getFileHandler = (e) => {
@@ -280,7 +307,7 @@ const CourseTab = () => {
     const fileReader = new FileReader();
 
     if (file) {
-      setInput({ ...input, courseThumbnail: file });
+      setInput((prev) => ({ ...prev, courseThumbnail: file }));
       fileReader.onloadend = () => {
         setPreviewThumbnail(fileReader.result);
       };
@@ -288,10 +315,31 @@ const CourseTab = () => {
     }
   };
 
-  const getUpdateCourseHandler = (e) => {
+  const getUpdateCourseHandler = async (e) => {
     e.preventDefault();
-    console.log(input);
+    const formData = new FormData();
+    formData.append("courseTitle", input.courseTitle);
+    formData.append("subTitle", input.subTitle);
+    formData.append("description", input.description);
+    formData.append("category", input.category);
+    formData.append("courseLevel", input.courseLevel);
+    formData.append("coursePrice", input.coursePrice);
+
+    if (input.courseThumbnail && typeof input.courseThumbnail !== "string") {
+      formData.append("courseThumbnail", input.courseThumbnail);
+    }
+
+    await editCourse({ formData, courseId });
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success(data?.message || "Course Updated Successfully");
+    }
+    if (error) {
+      toast.error(error?.data?.message || "Error Updating Course");
+    }
+  }, [isSuccess, error, data]);
 
   return (
     <Card className="shadow-xl rounded-2xl">
@@ -311,10 +359,7 @@ const CourseTab = () => {
       </CardHeader>
 
       <CardContent>
-        <form
-          onSubmit={getUpdateCourseHandler}
-          className="space-y-6 mt-6 px-2 md:px-4"
-        >
+        <form onSubmit={getUpdateCourseHandler} className="space-y-6 mt-6 px-2 md:px-4">
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <Label className="block mb-1">Title</Label>
@@ -347,7 +392,10 @@ const CourseTab = () => {
           <div className="grid md:grid-cols-3 gap-6">
             <div>
               <Label className="block mb-1">Category</Label>
-              <Select onValueChange={selectedCategoryHandler}>
+              <Select
+                onValueChange={selectedCategoryHandler}
+                defaultValue={input.category}
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select a Category" />
                 </SelectTrigger>
@@ -378,7 +426,10 @@ const CourseTab = () => {
 
             <div>
               <Label className="block mb-1">Course Level</Label>
-              <Select onValueChange={selectedCourseLevelHandler}>
+              <Select
+                onValueChange={selectedCourseLevelHandler}
+                defaultValue={input.courseLevel}
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select Level" />
                 </SelectTrigger>
@@ -399,8 +450,8 @@ const CourseTab = () => {
                 type="number"
                 name="coursePrice"
                 value={input.coursePrice}
-                placeholder="Ex. Rs.1999"
                 onChange={changeEventHandler}
+                placeholder="Ex. Rs.1999"
               />
             </div>
           </div>
@@ -410,6 +461,7 @@ const CourseTab = () => {
             <Input
               type="file"
               accept="image/*"
+              value={undefined}
               onChange={getFileHandler}
               className="w-full"
             />
@@ -449,5 +501,7 @@ const CourseTab = () => {
 };
 
 export default CourseTab;
+
+
 
 
