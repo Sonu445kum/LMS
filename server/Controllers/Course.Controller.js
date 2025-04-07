@@ -72,6 +72,7 @@
 
 // new code
 import { Course } from "../Models/Course.Model.js";
+import { Lecture } from "../Models/Lecture.Model.js";
 import { deleteMediaFromCloudinary, uploadMedia } from "../Utils/Cloudinary.js";
 
 // Create a new course
@@ -184,7 +185,7 @@ export const editCourse = async (req, res) => {
 // getCourseById
 export const getCourseById = async (req, res) => {
   try {
-    const {courseId} = req.params;
+    const { courseId } = req.params;
     const course = await Course.findById(courseId);
     if (!course) {
       return res.status(404).json({ msg: "Course not found" });
@@ -195,5 +196,50 @@ export const getCourseById = async (req, res) => {
     return res
       .status(500)
       .json({ msg: "Something went wrong in the Get Course by Id" });
+  }
+};
+
+//create Lecture
+export const createLecture = async (req, res) => {
+  try {
+    const { lectureTitle } = req.body;
+    const { courseId } = req.params;
+
+    if (!lectureTitle || !courseId) {
+      return res
+        .status(400)
+        .json({ message: "Please provide lecture title and course id" });
+    }
+    //create lecture
+    const newLecture = await Lecture.create({ lectureTitle });
+    const course = await Course.findById(courseId);
+    if (course) {
+      course.lectures.push(newLecture._id);
+      await course.save();
+    }
+    return res.status(201).json({
+      newLecture,
+      message: "Lecture created successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Error creating lecture" });
+  }
+};
+
+// getCourseLecture
+export const getCourseLecture = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const course = await Course.findById(courseId).populate("lectures");
+    if (!course) {
+      return res.status(404).json({ msg: "Course not found" });
+    }
+    return res.status(200).json({ lectures: course.lectures });
+  } catch (error) {
+    console.error("Error getting course lectures:", error);
+    return res.status(500).json({
+        msg: "Something went wrong in the Get Course Lecture",
+    })
   }
 };
