@@ -1,230 +1,8 @@
-// import RichTextEditor from "@/components/RichTextEditor";
-// import { Button } from "@/components/ui/button";
-// import {
-//   Card,
-//   CardContent,
-//   CardDescription,
-//   CardHeader,
-//   CardTitle,
-// } from "@/components/ui/card";
-// import { Input } from "@/components/ui/input";
-// import { Label } from "@/components/ui/label";
-// import React, { useState } from "react";
-// import {
-//   Select,
-//   SelectContent,
-//   SelectGroup,
-//   SelectItem,
-//   SelectLabel,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select";
-// import { Loader2 } from "lucide-react";
-// import { useNavigate } from "react-router-dom";
-// const CourseTab = () => {
-//   const [input, setInput] = useState({
-//     courseTitle: "",
-//     subTitle: "",
-//     description: "",
-//     category: "",
-//     courseLevel: "",
-//     coursePrice: "",
-//     courseThumbnail: "",
-//   });
-
-//   const [previewThumbnail, setPreviewThumbnail] = useState('');
-
-//   //changeEventHandler
-//   const changeEventHandler = (e) => {
-//     const { name, value } = e.target;
-//     setInput({ ...input, [name]: value });
-//   };
-
-//   // selectedCategoryHandler
-//   const selectedCategoryHandler = (e) => {
-//     setInput({ ...input, category:value });
-//   }
-
-//   // selectedCourseLevelHandler
-//   const selectedCourseLevelHandler = (e) => {
-//     setInput({ ...input, courseLevel: value });
-//   }
-
-//   // getFileHandler
-//   const getFileHandler = (e) => {
-//     const file = e.target.files?.[0];
-//     const fileReader = new FileReader();
-
-//     if (file) {
-//         setInput({ ...input, courseThumbnail: file });
-//         fileReader.readAsDataURL(file);
-//         fileReader.onloadend = () => {
-//             setPreviewThumbnail(fileReader.result);
-//             fileReader.readAsDataURL(file);
-//         }
-
-//     }
-// }
-
-// //getUpdateCourseHandler
-// const getUpdateCourseHandler = (e) => {
-//     e.preventDefault();
-//     console.log(input);
-// }
-//   const navigate = useNavigate();
-//   const isPublished = true;
-//   const isLoading = false;
-//   return (
-//     <Card>
-//       <CardHeader className="flex flex-row justify-between">
-//         <div>
-//           <CardTitle>
-//             <CardDescription>
-//               Make Changes To Your Courses Here.Click Save When You're Done
-//             </CardDescription>
-//           </CardTitle>
-//         </div>
-//         <div className="space-x-2">
-//           <Button variant="outline">
-//             {isPublished ? "Unpublish" : "Publish"}
-//           </Button>
-//           <Button>Remove Course</Button>
-//         </div>
-//       </CardHeader>
-//       {/* CardContent */}
-//       <CardContent>
-//         <div className="space-y-4 mt-5">
-//           <Label>Title</Label>
-//           <Input
-//             type="text"
-//             name="courseTitle"
-//             value={input.courseTitle}
-//             onChange={changeEventHandler}
-//             placeholder="Ex.Full Stack Web Development"
-//           />
-//         </div>
-//         <div className="space-y-4 mt-5">
-//           <Label>SubTitle</Label>
-//           <Input
-//             type="text"
-//             name="SubTitle"
-//             value={input.subTitle}
-//             onChange={changeEventHandler}
-//             placeholder="Ex. Become a Full Stack Web Developer"
-//           />
-//         </div>
-//         <div className="space-y-4 mt-5">
-//           <Label>Description</Label>
-//           <RichTextEditor input={input} setInput={setInput} />
-//         </div>
-//         <div className=" flex flex-row gap-3 space-y-4 mt-5">
-//           <div>
-//             <Label>Category</Label>
-//             <Select onClick={selectedCategoryHandler}>
-//               <SelectTrigger className="w-[180px]">
-//                 <SelectValue placeholder="Select a Course" />
-//               </SelectTrigger>
-//               <SelectContent>
-//                 <SelectGroup>
-//                   <SelectLabel>Course</SelectLabel>
-//                   <SelectItem value="React js">React js</SelectItem>
-//                   <SelectItem value="Next Js">Next Js</SelectItem>
-//                   <SelectItem value="Data Science">Data Science</SelectItem>
-//                   <SelectItem value="Frontend Development">
-//                     Frontend Development
-//                   </SelectItem>
-//                   <SelectItem value="Full Stack Development">
-//                     Full Stack Development
-//                   </SelectItem>
-//                   <SelectItem value="MERN Stack Development">
-//                     MERN Stack Development
-//                   </SelectItem>
-//                   <SelectItem value="Full Stack Development">
-//                     Javascript
-//                   </SelectItem>
-//                   <SelectItem value="Full Stack Development">Python</SelectItem>
-//                   <SelectItem value="Full Stack Development">Docker</SelectItem>
-//                   <SelectItem value="Full Stack Development">Nodejs</SelectItem>
-//                   <SelectItem value="Full Stack Development">
-//                     MongoDb
-//                   </SelectItem>
-//                 </SelectGroup>
-//               </SelectContent>
-//             </Select>
-//           </div>
-//           <div>
-//             <Label>Course Level</Label>
-//             <Select onClick={selectedCourseLevelHandler}>
-//               <SelectTrigger className="w-[180px]">
-//                 <SelectValue placeholder="Select a Course" />
-//               </SelectTrigger>
-//               <SelectContent>
-//                 <SelectGroup>
-//                   <SelectLabel>Course</SelectLabel>
-//                   <SelectItem value="Beginners">Beginners</SelectItem>
-//                   <SelectItem value="Intermediate">Intermediate</SelectItem>
-//                   <SelectItem value="Advance">Advance</SelectItem>
-//                 </SelectGroup>
-//               </SelectContent>
-//             </Select>
-//           </div>
-
-//           <div>
-//             <Label>Price in (INR)</Label>
-//             <Input 
-//             type='number'
-//             name="coursePrice"
-//             value={input.coursePrice}
-//             placeholder="Ex. Rs.1999"
-//             onChange={changeEventHandler} 
-//             className='w-fit'
-//             />
-//           </div>
-          
-//         </div>
-//         <div>
-//             <Label>Course Thumbnail</Label>
-//             <Input
-//             type='file'
-//             accept='image/*'
-//             onChange={getFileHandler}
-//             className='w-fit'
-//             />
-//             {
-//                 previewThumbnail && (
-//                     <img src={previewThumbnail} alt="Thumbnail" className="w-[100px] h-[100px] object-cover" />
-//                 )
-//             }
-//           </div>
-//           <div>
-//             <Button 
-//             onClick={() => navigate("/admin/course")}
-//             variant='outline'>Cancel</Button>
-//             <Button disabled={isLoading} onClick={getUpdateCourseHandler}>
-//                 {
-//                     isLoading ? (
-//                         <>
-//                         <Loader2 className="mr-2 h-4 w-4 animate-spin"/>
-//                         Please Wait
-//                         </>
-//                     ):(
-//                         "Save"
-//                     )
-//                 }
-//             </Button>
-//           </div>
-//       </CardContent>
-//     </Card>
-//   );
-// };
-
-// export default CourseTab;
-
 
 // new code 
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEditCourseMutation, useGetCourseByIdQuery } from "@/Features/Api/courseApi";
+import { useEditCourseMutation, useGetCourseByIdQuery, usePublishCourseMutation } from "@/Features/Api/courseApi";
 import { toast } from "sonner";
 import RichTextEditor from "@/components/RichTextEditor";
 import { Button } from "@/components/ui/button";
@@ -268,9 +46,10 @@ const CourseTab = () => {
     isLoading: courseByIdLoading,
     isError: courseByIdError,
     isSuccess: courseByIdSuccess,
+    refetch,
   } = useGetCourseByIdQuery(courseId ,{refetchOnMountOrArgChange: true});
 
-  const isPublished = true;
+  // const isPublished = true;
 
   const course = courseByIdData?.course;
 
@@ -341,6 +120,19 @@ const CourseTab = () => {
     }
   }, [isSuccess, error, data]);
 
+  const [publishCourse,{}] = usePublishCourseMutation();
+  // publish status handler
+  const publishStatusHandler = async (action) => {
+    try {
+      const response = await publishCourse({courseId,query:action});
+      if (response.data){
+         refetch();
+        toast.success(response.data.message || "Status Updated Successfully");
+      }
+    } catch (error) {
+      toast.error(error.data.message);
+    }
+  };
   return (
     <Card className="shadow-xl rounded-2xl">
       <CardHeader className="flex flex-col md:flex-row justify-between gap-4">
@@ -351,8 +143,8 @@ const CourseTab = () => {
           </CardDescription>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline">
-            {isPublished ? "Unpublish" : "Publish"}
+          <Button disabled={courseByIdData?.course.isPublished.length === 0} variant="outline" onClick={()=>{publishStatusHandler(courseByIdData?.course.isPublished ? false : true)}}>
+            {courseByIdData?.course.isPublished ? "Unpublish" : "Publish"}
           </Button>
           <Button variant="destructive">Remove Course</Button>
         </div>
@@ -501,6 +293,12 @@ const CourseTab = () => {
 };
 
 export default CourseTab;
+
+
+
+
+
+
 
 
 

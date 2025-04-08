@@ -73,7 +73,11 @@
 // new code
 import { Course } from "../Models/Course.Model.js";
 import { Lecture } from "../Models/Lecture.Model.js";
-import { deleteMediaFromCloudinary, uploadMedia } from "../Utils/Cloudinary.js";
+import {
+  deleteMediaFromCloudinary,
+  deleteVideoFromCloudinary,
+  uploadMedia,
+} from "../Utils/Cloudinary.js";
 
 // Create a new course
 export const createCourse = async (req, res) => {
@@ -239,7 +243,116 @@ export const getCourseLecture = async (req, res) => {
   } catch (error) {
     console.error("Error getting course lectures:", error);
     return res.status(500).json({
-        msg: "Something went wrong in the Get Course Lecture",
-    })
+      msg: "Something went wrong in the Get Course Lecture",
+    });
+  }
+};
+
+// editVideoLecture
+export const editLecture = async (req, res) => {
+  try {
+    const { lectureTitle, videoInfo, isPreviewFree } = req.body;
+    const { courseId, lectureId } = req.params;
+    const lecture = await Lecture.findById(lectureId);
+    if (!lecture) {
+      return res.status(404).json({ msg: "Lecture not found" });
+    }
+    //update lecture
+    if (lectureTitle) {
+      lecture.lectureTitle = lectureTitle;
+    }
+    if (videoInfo) {
+      lecture.videoUrl = videoInfo.videoUrl;
+    }
+    if (videoInfo) {
+      lecture.publicId = videoInfo.publicId;
+    }
+    lecture.isPreviewFree = isPreviewFree;
+
+    //save lecture
+    await lecture.save();
+
+    //Ensure the course still has the lecture id if it was not already added
+    const course = await Course.findById(courseId);
+    if (course && !course.lectures.includes(lecture._id)) {
+      course.lectures.push(lecture._id);
+      await course.save();
+    }
+    return res.status(200).json({
+      msg: "Lecture updated successfully",
+      lecture,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      msg: "Something went wrong in the Edit Lecture",
+    });
+  }
+};
+
+//removeLecture
+export const removeLecture = async (req, res) => {
+  try {
+    const { lectureId } = req.params;
+    const lecture = await Lecture.findByIdAndDelete(lectureId);
+    if (!lecture) {
+      return res.status(404).json({ msg: "Lecture not found" });
+    }
+    // Delete the Lecture from Couldinary as Well
+    if (lecture.publicId) {
+      await deleteVideoFromCloudinary(lecture.publicId);
+    }
+    //remove the lecture from the course
+    await Course.updateOne(
+      { lectures: lectureId }, // find the course that contains the lecture
+      { $pull: { lectures: lectureId } } // Remove the Lecture id from lecture array
+    );
+    return res.status(200).json({ msg: "Lecture removed successfully" });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ msg: "Something went wrong in the Remove Lecture" });
+  }
+};
+
+//getLectureById
+export const getLectureById = async (req, res) => {
+  try {
+    const { lectureId } = req.params;
+    const lecture = await Lecture.findById(lectureId);
+    if (!lecture) {
+      return res.status(404).json({ msg: "Lecture not found" });
+    }
+    return res.status(200).json({ lecture });
+  } catch (error) {
+    console.error("Error getting lecture by ID:", error);
+    return res
+      .status(500)
+      .json({ msg: "Something went wrong in the Get Lecture by Id" });
+  }
+};
+
+//Publish or UnPublish a Course Logic
+export const togglePublishCourse = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const { publish } = req.query;
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({ msg: "Course not found" });
+    }
+    // Toggle the publish status of the course
+    course.isPublished = publish === "true";
+    await course.save();
+    const statusMessage = course.isPublished ? "published" : "unpublished";
+    return res
+      .status(200)
+      .json({ msg: `Course ${statusMessage} successfully` });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ msg: "Something went wrong in the Toggle Publish Course" });
   }
 };

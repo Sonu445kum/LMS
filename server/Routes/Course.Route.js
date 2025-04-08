@@ -1,6 +1,6 @@
 import express from "express";
 import isAuthenticated from "../Middlewares/isAuthenticated.js";
-import { createCourse, createLecture, editCourse, getAllAdminCourses, getCourseById, getCourseLecture } from "../Controllers/Course.Controller.js";
+import { createCourse, createLecture, editCourse, editLecture, getAllAdminCourses, getCourseById, getCourseLecture, getLectureById, removeLecture, togglePublishCourse } from "../Controllers/Course.Controller.js";
 import upload from "../Utils/Multer.js";
 const router = express.Router();
 //import controller functionality here
@@ -12,4 +12,11 @@ router.route("/:courseId").put(isAuthenticated,upload.single("courseThumbnail"),
 router.route("/:courseId").get(isAuthenticated,getCourseById);
 router.route("/:courseId/lecture").post(isAuthenticated,createLecture);
 router.route("/:courseId/lecture").get(isAuthenticated,getCourseLecture);
+router.route("/:courseId/lecture/:lectureId").post(isAuthenticated,editLecture);
+router.route("/lecture/:lectureId").delete(isAuthenticated,removeLecture);
+router.route("/lecture/:lectureId").get(isAuthenticated,getLectureById);
+router.route("/:courseId").patch(isAuthenticated,togglePublishCourse);
+
+
+
 export default router;
