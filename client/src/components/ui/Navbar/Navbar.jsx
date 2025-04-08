@@ -194,7 +194,9 @@ const Navbar = () => {
         {/* Logo */}
         <div className="flex items-center gap-2">
           <School size={30} />
+          <Link to='/'>
           <h1 className="font-extrabold text-2xl">LearnLofts</h1>
+          </Link>
         </div>
 
         {/* User Icons & Dark Mode */}

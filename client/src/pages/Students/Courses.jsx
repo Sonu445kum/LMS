@@ -3,18 +3,19 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 import Course from "../Students/Course";
 import coursesData from "../Students/CourseData"; // Import courses data
+import { useGetPublishedCourseQuery } from "@/Features/Api/courseApi";
 
 const Courses = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [courses, setCourses] = useState([]);
+  
 
-  useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      setCourses(coursesData); // Set course data after delay
-      setIsLoading(false);
-    }, 2000);
-  }, []);
+  //GetPublishedCourse
+  const { data,isLoading,isSuccess,error } = useGetPublishedCourseQuery();
+  console.log("data", data);
+  
+
+  if(error){
+    return <h1>Something went wrong</h1>
+  }
 
   return (
     <div className="bg-gray-50">
@@ -25,7 +26,7 @@ const Courses = () => {
             ? Array.from({ length: 8 }).map((_, index) => (
                 <CourseSkeleton key={index} />
               ))
-            : courses.map((course) => <Course key={course.id} course={course} />)}
+            :data?.courses && data.courses.map((course) => <Course key={course.id} course={course} />)}
         </div>
       </div>
     </div>

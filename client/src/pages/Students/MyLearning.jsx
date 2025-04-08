@@ -3,15 +3,8 @@ import React, { useState, useEffect } from 'react';
 import Courses from './Courses';
 
 const MyLearning = () => {
-    const [isLoading, setIsLoading] = useState(true);
-    const myLearningCourses = [1, 2]; // Simulating enrolled courses
-
-    // Simulating loading data
-    useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 2000); // Simulates data fetching delay
-    }, []);
+    const isLoading = false;
+    const myLearningCourses = [];
 
     return (
         <div className='max-w-4xl mx-auto my-24 px-4 md:px-0'>
@@ -22,7 +15,11 @@ const MyLearning = () => {
                 ) : myLearningCourses.length === 0 ? (
                     <p>You are not Enrolled in any Courses</p>
                 ) : (
-                    <Courses />
+                   <div>
+                    {myLearningCourses.map((course, index) => (
+                        <Courses key={index} course={course} />
+                    ))}
+                   </div>
                 )}
             </div>
         </div>
