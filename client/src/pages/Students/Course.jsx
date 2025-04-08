@@ -1,17 +1,53 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Course = ({ course }) => {
   return (
-    <div className="bg-white shadow-md rounded-lg p-4">
-      <img src={course.imageUrl} alt={course.title} className="rounded-md w-full h-48 object-cover" />
-      <h3 className="font-bold text-lg mt-2">{course.title}</h3>
-      <p className="text-gray-500">{course.instructor}</p>
-      <p className="text-green-600 font-semibold">{course.price}</p>
-      <Badge>
-        {course.level}
-      </Badge>
-    </div>
+    <Link to={`course-details/${course._id}`}>
+    <Card className="overflow-hidden rounded-2xl dark:bg-gray-800 bg-white shadow-md hover:shadow-xl transition duration-300 ease-in-out group">
+      <div className="relative">
+        <img
+          src={course.courseThumbnail}
+          alt="course"
+          className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+        />
+        <Badge className="absolute top-3 right-3 bg-gradient-to-r from-purple-600 to-blue-500 text-white px-3 py-1 text-xs rounded-full shadow-md">
+          {course.courseLevel}
+        </Badge>
+      </div>
+
+      <CardContent className="px-5 py-4 space-y-3">
+        <h1 className="hover:underline text-xl font-semibold text-gray-800 dark:text-white transition-colors duration-200 cursor-pointer">
+          {course.courseTitle}
+        </h1>
+
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Avatar className="h-9 w-9">
+              <AvatarImage
+                src={course.creator?.photoUrl || "https://github.com/shadcn.png"}
+                alt={course.creator?.name || "Creator"}
+              />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            <h1 className="font-medium text-sm text-gray-700 dark:text-gray-300">
+              {course.creator?.name}
+            </h1>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between pt-2">
+          <span className="text-lg font-bold text-green-600">₹{course.coursePrice}</span>
+          <button className="text-sm text-white bg-blue-600 hover:bg-blue-700 px-4 py-1 rounded-full transition duration-300">
+            Enroll
+          </button>
+        </div>
+      </CardContent>
+    </Card>
+    </Link>
   );
 };
 
