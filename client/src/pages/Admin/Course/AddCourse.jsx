@@ -116,9 +116,9 @@
 // export default AddCourse;
 
 // new code 
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import React, { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -128,22 +128,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
-import { Loader2 } from "lucide-react";
 import { useCreateCourseMutation } from "@/Features/Api/courseApi";
+import { Loader2 } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 const AddCourse = () => {
   const [courseTitle, setCourseTitle] = useState("");
   const [category, setCategory] = useState("");
-  const [createCourse, { data, isLoading: isCreating, error, isSuccess }] =
-    useCreateCourseMutation();
+
+  const [createCourse, { data, isLoading, error, isSuccess }] = useCreateCourseMutation();
   const navigate = useNavigate();
 
-  const getSelectedCategory = (value) => {
-    setCategory(value);
-  };
+  const getSelectedCategory = (value) => setCategory(value);
 
   const createCourseHandler = async () => {
     await createCourse({ courseTitle, category });
@@ -151,93 +149,89 @@ const AddCourse = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success(data?.message || "Course Created Successfully");
+      toast.success(data?.message || "Course created.");
       navigate("/admin/course");
     }
-  }, [isSuccess, error, data]);
+  }, [isSuccess, error]);
 
   return (
-    <div className="max-w-3xl mx-auto py-8 px-4">
-      <div className="bg-white shadow-xl rounded-2xl p-6 space-y-6 border border-gray-200">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-slate-100 to-white px-4">
+      <div className="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-8 space-y-6 transition-all duration-300">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-800 mb-1">
-            Add a New Course
-          </h1>
-          <p className="text-sm text-gray-500">
-            Add basic details to get started with your course creation.
+          <h1 className="text-3xl font-bold text-gray-800">🚀 Create a New Course</h1>
+          <p className="text-sm text-gray-500 mt-1">
+            Fill out the course title and category to get started.
           </p>
         </div>
 
-        <div className="space-y-4">
-          {/* Course Title Input */}
-          <div className="space-y-1">
-            <Label className="text-sm text-gray-700">Course Title</Label>
+        <div className="grid gap-6">
+          {/* Course Title */}
+          <div className="grid gap-2">
+            <Label className="text-base font-medium">Course Title</Label>
             <Input
               type="text"
-              name="courseTitle"
               value={courseTitle}
               onChange={(e) => setCourseTitle(e.target.value)}
-              placeholder="Enter Course Title"
-              className="w-full"
+              placeholder="e.g., Mastering Kubernetes"
+              className="transition-all focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
-          {/* Category Selector */}
-          <div className="space-y-1">
-            <Label className="text-sm text-gray-700">Category</Label>
+          {/* Category Select */}
+          <div className="grid gap-2">
+            <Label className="text-base font-medium">Category</Label>
             <Select onValueChange={getSelectedCategory}>
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select a Category" />
+                <SelectValue placeholder="Choose a category" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectLabel>Course Categories</SelectLabel>
-                  <SelectItem value="React js">React JS</SelectItem>
-                  <SelectItem value="Next Js">Next JS</SelectItem>
-                  <SelectItem value="Data Science">Data Science</SelectItem>
-                  <SelectItem value="Frontend Development">
-                    Frontend Development
-                  </SelectItem>
-                  <SelectItem value="Full Stack Development">
-                    Full Stack Development
-                  </SelectItem>
-                  <SelectItem value="MERN Stack Development">
-                    MERN Stack Development
-                  </SelectItem>
-                  <SelectItem value="Javascript">JavaScript</SelectItem>
-                  <SelectItem value="Python">Python</SelectItem>
-                  <SelectItem value="Docker">Docker</SelectItem>
-                  <SelectItem value="Nodejs">Node.js</SelectItem>
-                  <SelectItem value="MongoDb">MongoDB</SelectItem>
+                  <SelectLabel>Available Categories</SelectLabel>
+                  {[
+                    "Next JS",
+                    "Data Science",
+                    "Frontend Development",
+                    "Fullstack Development",
+                    "MERN Stack Development",
+                    "Javascript",
+                    "Python",
+                    "Docker",
+                    "MongoDB",
+                    "HTML",
+                  ].map((cat) => (
+                    <SelectItem key={cat} value={cat}>
+                      {cat}
+                    </SelectItem>
+                  ))}
                 </SelectGroup>
               </SelectContent>
             </Select>
           </div>
-        </div>
 
-        {/* Action Buttons */}
-        <div className="flex justify-between pt-4">
-          <Button
-            variant="outline"
-            onClick={() => navigate("/admin/course")}
-            className="rounded-lg"
-          >
-            Back
-          </Button>
-          <Button
-            disabled={isCreating}
-            onClick={createCourseHandler}
-            className="rounded-lg bg-blue-600 hover:bg-blue-700 text-white"
-          >
-            {isCreating ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Creating...
-              </>
-            ) : (
-              "Create Course"
-            )}
-          </Button>
+          {/* Action Buttons */}
+          <div className="flex justify-between pt-4">
+            <Button
+              variant="outline"
+              className="transition-all hover:bg-gray-100"
+              onClick={() => navigate("/admin/course")}
+            >
+              ⬅️ Back
+            </Button>
+            <Button
+              disabled={isLoading}
+              onClick={createCourseHandler}
+              className="bg-blue-600 hover:bg-blue-700 text-white transition-all"
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Creating...
+                </>
+              ) : (
+                "Create Course"
+              )}
+            </Button>
+          </div>
         </div>
       </div>
     </div>
@@ -245,4 +239,5 @@ const AddCourse = () => {
 };
 
 export default AddCourse;
+
 

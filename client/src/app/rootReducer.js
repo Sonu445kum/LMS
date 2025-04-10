@@ -4,12 +4,15 @@ import { authApi } from "../Features/Api/authApi.js";
 import { courseApi } from "@/Features/Api/courseApi.js";
 import { purchaseApi } from "@/Features/Api/purchaseApi.js";
 import { courseProgressApi } from "@/Features/Api/courseProgressApi.js";
+import { certificationApi } from "@/Features/Api/certificationsApi.js";
 const rootReducer = combineReducers({
     auth: authReducer,
     [authApi.reducerPath]: authApi.reducer,
     [courseApi.reducerPath]:courseApi.reducer,
     [purchaseApi.reducerPath]:purchaseApi.reducer,
-    [courseProgressApi.reducerPath]:courseProgressApi.reducer
+    [courseProgressApi.reducerPath]:courseProgressApi.reducer,
+    [certificationApi.reducerPath]:certificationApi.reducer
+
     
 });
 
