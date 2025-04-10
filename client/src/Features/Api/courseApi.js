@@ -201,31 +201,30 @@ export const courseApi = createApi({
       invalidatesTags: ["Refetch_Creator_Course"],
     }),
 
-    // ✅ Fixed getSearchCourse method
     getSearchCourse: builder.query({
       query: ({ searchQuery = "", categories = [], sortByPrice = "" }) => {
         const params = new URLSearchParams();
-    
-        if (searchQuery.trim()) {
+
+        if (searchQuery?.trim()) {
           params.append("searchQuery", searchQuery.trim());
         }
-    
+
         if (categories.length > 0) {
-          // Pass comma-separated string: e.g., "nextjs,data science"
           params.append("categories", categories.join(","));
         }
-    
+
         if (sortByPrice) {
           params.append("sort", sortByPrice);
         }
-    
+
+        const paramStr = params.toString();
         return {
-          url: `/search?${params.toString()}`,
+          url: paramStr ? `/search?${paramStr}` : "/search",
           method: "GET",
         };
       },
     }),
-    
+
     getPublishedCourse: builder.query({
       query: () => ({
         url: "/published-courses",
@@ -234,10 +233,7 @@ export const courseApi = createApi({
     }),
 
     getCreatorCourse: builder.query({
-      query: () => ({
-        url: "",
-        method: "GET",
-      }),
+      query: () => ({ url: "", method: "GET" }),
       providesTags: ["Refetch_Creator_Course"],
     }),
 
@@ -251,10 +247,7 @@ export const courseApi = createApi({
     }),
 
     getCourseById: builder.query({
-      query: (courseId) => ({
-        url: `/${courseId}`,
-        method: "GET",
-      }),
+      query: (courseId) => ({ url: `/${courseId}`, method: "GET" }),
     }),
 
     createLecture: builder.mutation({
@@ -274,13 +267,7 @@ export const courseApi = createApi({
     }),
 
     editLecture: builder.mutation({
-      query: ({
-        lectureTitle,
-        videoInfo,
-        isPreviewFree,
-        courseId,
-        lectureId,
-      }) => ({
+      query: ({ lectureTitle, videoInfo, isPreviewFree, courseId, lectureId }) => ({
         url: `/${courseId}/lecture/${lectureId}`,
         method: "POST",
         body: { lectureTitle, videoInfo, isPreviewFree },
@@ -325,4 +312,5 @@ export const {
   useGetLectureByIdQuery,
   usePublishCourseMutation,
 } = courseApi;
+
 

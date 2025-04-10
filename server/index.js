@@ -9,7 +9,8 @@ import userRoutes from "./Routes/User.Route.js";
 import courseRoutes from "./Routes/Course.Route.js";
 import mediaRoutes from "./Routes/Media.Route.js";
 import CoursePurchaseRoutes from "./Routes/CoursePurchase.Route.js";
-import CourseProgressRoutes from "./Routes/CourseProgress.Route.js"
+import CourseProgressRoutes from "./Routes/CourseProgress.Route.js";
+import CertificationsRoutes from "./Routes/Certifications.Route.js";
 dotenv.config();
 connectDB();
 const PORT = process.env.PORT || 8080;
@@ -31,6 +32,7 @@ app.get("/", (req, res) => {
 // All Api
 app.use("/api/v1/user",userRoutes);
 app.use("/api/v1/course",courseRoutes);
+app.use("/api/v1/certifications",CertificationsRoutes);
 app.use("/api/v1/media",mediaRoutes);
 app.use("/api/v1/purchase",CoursePurchaseRoutes);
 app.use("/api/v1/progress", CourseProgressRoutes);
