@@ -86,7 +86,7 @@ export const certificates=[
     {
         pro_management:[
             {
-                id:"1",
+                id:"project_management_1",
                 title:"PMI ACP",
                 image:[PMI_ACP],
                 description:"Agile Certified Practitioner (ACP) certification by Project Management Institute (PMI).",
@@ -109,7 +109,7 @@ export const certificates=[
                  Road_map:[],
             },
             {
-                id:"2",
+                id:"project_management_2",
                 title:"CAPM",
                 image:[CAPM],
                 description:"Certified Associate in Project Management (CAPM) certification by Project Management Institute (PMI).",
@@ -136,7 +136,7 @@ export const certificates=[
             },
 
             {
-                id:"3",
+                id:"project_management_3",
                 title:"PGMP",
                 image:[PGMP],
                 description:"Program Management Professional (PgMP) certification by Project Management Institute (PMI).",
@@ -158,7 +158,7 @@ export const certificates=[
                 Road_map:[],
             },
             {
-                id:"4",
+                id:"project_management_4",
                 title:"PMP",
                 image:[PMP],
                 description:"Project Management Professional (PMP) certification by Project Management Institute (PMI).",
@@ -180,7 +180,7 @@ export const certificates=[
                 Road_map:[],
             },
             {
-                id:"5",
+                id:"project_management_5",
                 title:"RMP",
                 image:[PMI_RMP],
                 description:"Risk Management Professional (RMP) certification by Project Management Institute (PMI).",
@@ -203,7 +203,7 @@ export const certificates=[
             },
 
             {
-                id:"6",
+                id:"project_management_6",
                 title:"PBA",
                 image:[PMI_PBA],
                 description:"Professional in Business Analysis (PBA) certification by Project Management Institute (PMI).",
@@ -226,7 +226,7 @@ export const certificates=[
             },
 
             {
-                id:"7",
+                id:"project_management_7",
                 title:"PfMP",
                 image:[Pfmp],
                 description:"Portfolio Management Professional (PfMP) certification by Project Management Institute (PMI).",
@@ -249,7 +249,7 @@ export const certificates=[
             },
 
             {
-                id:"8",
+                id:"project_management_8",
                 title:"PMI-CP",
                 image:[PMI_CP],
                 description:"Construction Professional (CP) certification by Project Management Institute (PMI).",
@@ -272,7 +272,7 @@ export const certificates=[
         
         information_security:[
             {
-                id:"1_1",
+                id:"information_security_1",
                 title:"CRISC",
                 image:[CRISC],
                 description:"Certified in Risk and Information Systems Control (CRISC) certification by Information Systems Audit and Control Association (ISACA).",
@@ -293,7 +293,7 @@ export const certificates=[
                 Road_map:[],
             },
             {
-                id:"1_2",
+                id:"information_security_2",
                 title:"CISM",
                 image:[CISM],
                 description:"Certified Information Security Manager (CISM) certification.",
@@ -314,7 +314,7 @@ export const certificates=[
                 Road_map:[],
             },
             {
-                id:"1_3",
+                id:"information_security_3",
                 title:"CISSP",
                 image:[CISSP],
                 description:"Certified Information Systems Security Professional (CISSP) certification by The International Information Systems Security Certification Consortium (ISC2).",
@@ -336,7 +336,7 @@ export const certificates=[
             },
 
             {
-                id:"1_4",
+                id:"information_security_4",
                 title:"CISA",
                 image:[CISA],
                 description:"Certified Information Systems Auditor (CISA) certification by Information Systems Audit and Control Association (ISACA).",
@@ -360,7 +360,7 @@ export const certificates=[
 
         quality_management: [
             {
-                id:"2_1",
+                id:"quality_management_1",
                 title:"Lean Six Sigma Black Belt",
                 image:[sigma1],
                 description:"Lean Six Sigma Black Belt (LSSBB) certification by International Association for Six Sigma Certification (IASSC).",
@@ -383,7 +383,7 @@ export const certificates=[
             },
 
             {
-                id:"2_2",
+                id:"quality_management_2",
                 title:"Lean Six Sigma  Green Belt",
                 image:[sigma2],
                 description:"Lean Six Sigma Green Belt (LSSGB) certification by International Association for Six Sigma Certification (IASSC).",
@@ -405,7 +405,7 @@ export const certificates=[
 
             },
             {
-                id:"2_3",
+                id:"quality_management_3",
                 title:"Six Sigma Black Belt",
                 image:[sigma3],
                 description:"Six Sigma Black Belt (SSBB) certification by International Association for Six Sigma Certification (IASSC).",
@@ -429,7 +429,7 @@ export const certificates=[
             },
 
             {
-                id:"2_4",
+                id:"quality_management_4",
                 title:"Six Sigma Green Belt",
                 image:[sigma4],
                 description:"Six Sigma Green Belt (SSGB) certification by International Association for Six Sigma Certification (IASSC).",
@@ -450,7 +450,7 @@ export const certificates=[
 
             },
             {
-                id:"2_5",
+                id:"quality_management_5",
                 title:"Six Sigma Yellow Belt",
                 image:[sigma5],
                 description:"Six Sigma Yellow Belt (SSYB) certification by International Association for Six Sigma Certification (IASSC).",
@@ -471,7 +471,7 @@ export const certificates=[
 
             },
             {
-                id:"2_6",
+                id:"quality_management_6",
                 title:"Six Sigma White Belt",
                 image:[sigma6],
                 description:"Six Sigma White Belt (SSWB) certification by International Association for Six Sigma Certification (IASSC).",
@@ -500,7 +500,7 @@ export const certificates=[
         ],
         networking_certifications: [
             {
-                id:"3_1",
+                id:"networking_certifications_1",
                 title:"CCNA",
                 image:[CCNA],
                 description:"Cisco Certified Network Associate (CCNA) is an entry-level IT certification from Cisco Systems.",
@@ -524,7 +524,7 @@ export const certificates=[
             },
 
             {
-                id:"3_2",
+                id:"networking_certifications_2",
                 title:"CCNP",
                 image:[CCNP],
                 description:"Cisco Certified Network Professional (CCNP) is a professional-level certification from Cisco Systems.",
@@ -545,7 +545,7 @@ export const certificates=[
                 Road_map:[],
             },
             {
-                id:"3_3",
+                id:"networking_certifications_3",
                 title:"CCIE",
                 image:[CCIE],
                 description:"Cisco Certified Internetwork Expert (CCIE) is a professional-level certification from Cisco Systems.",
@@ -571,7 +571,7 @@ export const certificates=[
         ],
         cyber_security: [
             {
-                id:"4_1",
+                id:"cyber_security_1",
                 title:"CEH",
                 image:[CEH],
                 description:"Certified Ethical Hacker (CEH) certification by International Council of E-Commerce Consultants (EC-Council).",
@@ -593,7 +593,7 @@ export const certificates=[
                 Road_map:[],
             },
             {
-                id:"4_2",
+                id:"cyber_security_2",
                 title:"CHFI",
                 image:[CHFI],
                 description:"Computer Hacking Forensic Investigator (CHFI) certification by International Council of E-Commerce Consultants (EC-Council).",
@@ -617,7 +617,7 @@ export const certificates=[
         ],
         scrum_agile: [
             {
-                id:"5_1",
+                id:"scrum_agile_1",
                 title:"CSPO",
                 image:[CSPO],
                 description:"Certified Scrum Product Owner (CSPO) certification by Scrum Alliance.",
@@ -638,7 +638,7 @@ export const certificates=[
                 Road_map:[],
             },
             {
-                id:"5_2",
+                id:"scrum_agile_2",
                 title:"CSM",
                 image:[CSM],
                 description:"The Certified Scrum Master (CSM) certification administered by the Scrum Alliance.",
@@ -662,7 +662,7 @@ export const certificates=[
         ],
         microsoft_certifications: [
             {
-                id:"6_1",
+                id:"microsoft_certifications_1",
                 title:"Microsoft Azure",
                 image:[DATA_Science],
                 description:"Microsoft Azure certification validate skills in cloud computing, from basic concepts to specialized roles.",
@@ -686,7 +686,7 @@ export const certificates=[
                 
             },
             {
-                id:"6_2",
+                id:"microsoft_certifications_2",
                 title:"Azure Administrator Associate(AZ-104)",
                 image:[Administrator_Associate],
                 description:"Demonstrate key skills to configure, manage, secure, and administer key professional functions in Microsoft Azure.",
@@ -707,7 +707,7 @@ export const certificates=[
             },
 
             {
-                id:"6_3",
+                id:"microsoft_certifications_3",
                 title:"Azure Fundamentals(AZ-900)",
                 image:[microsoft_fundamental],
                 description:"Demonstrate foundational knowledge of cloud concepts, core Azure services, plus Azure management and governance features and tools.",
@@ -730,7 +730,7 @@ export const certificates=[
             },
 
             {
-                id:"6_4",
+                id:"microsoft_certifications_4",
                 title:"Azure Developer Associate(AZ-204)",
                 image:[Azure_Developer],
                 description:"Build end-to-end solutions in Microsoft Azure to create Azure Functions, implement and manage web apps, develop solutions utilizing Azure storage, and more.",
@@ -752,7 +752,7 @@ export const certificates=[
             },
             {
                
-                id:"6_5",
+                id:"microsoft_certifications_5",
                 title:"Azure Solutions Architect Expert(AZ-305)",
                 image:[Azure_Solutions],
                 description:"As a Microsoft Azure solutions architect, you have subject matter expertise in designing cloud and hybrid solutions that run on Azure, including:Network, Storage, Security etc.",
@@ -776,7 +776,7 @@ export const certificates=[
 
             {
                
-                 id:"6_6",
+                 id:"microsoft_certifications_6",
                  title: "Azure AI Engineer Associate(AI-102)",
                  image:[AI_Engineer],
                  description:"Design and implement an Azure AI solution using Azure AI services, Azure AI Search, and Azure Open AI.",
@@ -798,7 +798,7 @@ export const certificates=[
              },
 
              { 
-                 id:"6_7",
+                 id:"microsoft_certifications_7",
                  title:"Azure Data Scientist Associate(DP-100)",
                  image:[DATA_Science],
                  description:"Manage data ingestion and preparation, model training and deployment, and machine learning solution monitoring with Python, Azure Machine Learning and MLflow.",
@@ -820,7 +820,7 @@ export const certificates=[
              },
 
              { 
-                id:"6_8",
+                id:"microsoft_certifications_8",
                 title:"Azure Security Engineer Associate(AZ-500)",
                 image:[DATA_Science],
                 description:"Demonstrate the skills needed to implement security controls, maintain an organization’s security posture, and identify and remediate security vulnerabilities.",
@@ -841,7 +841,7 @@ export const certificates=[
              
             },
             { 
-                id:"6_9",
+                id:"microsoft_certifications_9",
                 title:"Power BI Data Analyst Associate (PL-300)",
                 image:[Power_BI],
                 description:"Demonstrate methods and best practices that align with business and technical requirements for modeling, visualizing, and analyzing data with Microsoft Power BI.",
@@ -868,7 +868,7 @@ export const certificates=[
         ],
         amazon_web_services: [
             {
-                id:"7_1",
+                id:"amazon_web_services_1",
                 title:"Solutions Architect-Associate",
                 image:[AWS_SAA],
                 description:"Solutions Architect: Associate (SAA-C03) Certification by Amazon Web Services (AWS).",
@@ -890,7 +890,7 @@ export const certificates=[
 
         },
         {
-            id:"7_2",
+            id:"amazon_web_services_2",
             title:"Solutions Architect-Professional",
             image:[AWS_SAP],
             description:"AWS Solutions Architect Professional (SAP-C02) Certification by Amazon Web Services (AWS).",
@@ -912,7 +912,7 @@ export const certificates=[
 
     },
     {
-        id:"7_3",
+        id:"amazon_web_services_3",
         title:"Cloud Practitioner-Foundational",
         image:[AWS_cloud],
         description:"AWS Cloud Practitioner Foundational (CLF-C02) Certification by Amazon Web Services (AWS).",
@@ -934,7 +934,7 @@ export const certificates=[
 },
 
 {
-    id:"7_4",
+    id:"amazon_web_services_4",
     title:"Developer-Associate",
     image:[AWS_Dev_as],
     description:"AWS Developer Associate (DVA-C02) Certification by Amazon Web Services (AWS).",
