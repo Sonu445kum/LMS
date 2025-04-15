@@ -120,7 +120,7 @@ export const logout = async (req, res) => {
 export const getUserProfile = async (req, res) => {
     try {
         // ✅ Get user ID from request
-        const userId = req.id;
+        const userId = req.user.id;
 
         // 🔴 Find user by ID
         const user = await User.findById(userId).select("-password");
@@ -149,7 +149,7 @@ export const getUserProfile = async (req, res) => {
 // 🛠 Update User Profile
 export const updateProfile = async (req, res) => {
     try {
-        const userId = req.id;
+        const userId = req.user.id;
         const { name } = req.body;
         const profilePhoto = req.file; // Uploaded file
 

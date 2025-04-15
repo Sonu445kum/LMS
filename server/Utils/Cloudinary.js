@@ -26,6 +26,10 @@ export const deleteMediaFromCloudinary = async(publicId)=>{
 
     } catch (error) {
         console.log(error);
+        return res.status(500).json({
+            message:"Failed to delete media from Cloudinary",
+            error:error.message
+        })
     }
 }
 
@@ -36,6 +40,10 @@ export const deleteVideoFromCloudinary = async(publicId)=>{
        }) 
     } catch (error) {
         console.log(error);
+        return res.status(500).json({
+            message:"Failed to delete video from Cloudinary",
+            error:error.message
+        })
     }
 }
 
