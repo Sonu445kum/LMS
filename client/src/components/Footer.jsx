@@ -64,7 +64,7 @@ const handleSubscribe = async (e) => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="text-center md:text-left">
               <h3 className="text-2xl font-bold mb-2 text-white animate-fade-in">
-                Subscribe to Our Newsletter
+                Subscribe to Our LearnLofts
               </h3>
               <p className="text-blue-100 text-sm sm:text-base">
                 Stay updated with our latest courses and educational insights

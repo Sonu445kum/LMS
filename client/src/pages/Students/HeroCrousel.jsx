@@ -346,13 +346,13 @@ function HeroCarousel() {
                     </h1>
                     <p className="text-xl text-gray-200">{item.description}</p>
                     <div className="flex flex-col sm:flex-row justify-center gap-4 items-center">
-                      <Button
+                      {/* <Button
                         size="lg"
                         onClick={() => navigate(item.link)}
                         className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg rounded-full transition-all duration-300 transform hover:scale-105"
                       >
                         {item.buttonText}
-                      </Button>
+                      </Button> */}
                       {/* <Button
                         variant="outline"
                         size="lg"

@@ -148,7 +148,7 @@ const CourseDetail = () => {
   };
 
   return (
-    <div className="-mt-20 w-screen min-h-screen bg-gradient-to-br from-[#1F1C2C] to-[#928DAB] text-white">
+    <div className="-mt-20 w-screen min-h-screen bg-gradient-to-br from-[#6fa4d2] to-[#43387f] text-white ">
       {/* Header Section */}
       <div className="bg-gray-900 bg-opacity-40 backdrop-blur-md shadow-md">
         <div className="max-w-7xl mx-auto px-4 md:px-10 py-10 space-y-3">
@@ -176,7 +176,7 @@ const CourseDetail = () => {
           />
 
           {/* Course Content */}
-          <Card className="bg-white bg-opacity-10 border-none backdrop-blur-md rounded-xl text-white shadow-lg">
+          <Card className="bg-white bg-opacity-10 border-none backdrop-blur-md rounded-xl text-white shadow-lg text-2xl font-bold">
             <CardHeader>
               <CardTitle className="text-xl">📚 Course Content</CardTitle>
               <CardDescription className="text-indigo-200">{course.lectures.length} Lectures</CardDescription>

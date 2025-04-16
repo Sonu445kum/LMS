@@ -174,6 +174,8 @@ import CertificationsTab from "./pages/Admin/Certifications/CertificationsTab";
 import CertificationsTable from "./pages/Admin/Certifications/CertificationsTable";
 import AddCertifications from "./pages/Admin/Certifications/AddCertifications";
 import EditCertifications from "./pages/Admin/Certifications/EditCertifications";
+import CertificationDropdown from "./pages/CertificationDropDown";
+import DisplayAllContent from "./pages/Students/DisplayAllContent";
 
 const appRouter = createBrowserRouter([
   {
@@ -186,6 +188,8 @@ const appRouter = createBrowserRouter([
           <>
             <HeroSection />
             <Courses />
+            <DisplayAllContent/>
+            
           </>
         ),
       },

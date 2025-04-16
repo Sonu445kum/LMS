@@ -48,12 +48,12 @@ export default function CertificationDropdown({ onMouseLeave }) {
     ) || [];
 
   return (
-    <div className="fixed inset-0 z-40" onMouseLeave={handleMouseLeave}>
+    <div className=" fixed inset-0 z-40" onMouseLeave={handleMouseLeave}>
       <div className="absolute top-[80px] inset-x-0 bottom-0 bg-black/5" />
 
       <motion.div
         ref={dropdownRef}
-        className="fixed top-[80px] left-1/2 -translate-x-1/2 w-[95vw] max-w-[1400px] bg-white rounded-xl shadow-lg border border-gray-100 z-50"
+        className="-mt-4 fixed top-[80px] left-1/2 -translate-x-1/2 w-[95vw] max-w-[1400px] bg-white rounded-xl shadow-lg border border-gray-100 z-50"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
@@ -147,7 +147,7 @@ export default function CertificationDropdown({ onMouseLeave }) {
                               </span>
                             </div>
                           </div>
-                          <ChevronRight className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-600" />
+                          {/* <ChevronRight className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-600" /> */}
                         </div>
                       </Link>
                     </motion.div>

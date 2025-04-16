@@ -65,7 +65,7 @@ function BlogsPage() {
                 key={blog.id}
                 className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col"
               >
-                <div className="relative h-48 overflow-hidden group">
+                <div className="relative h-30 overflow-hidden group">
                   <img
                     src={blog.image}
                     alt={blog.title}

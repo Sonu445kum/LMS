@@ -1,15 +1,15 @@
 export const blogData = [
     {
       id: 1,
-      title: "Getting Started with MERN Stack Development",
-      description: "Learn the fundamentals of MongoDB, Express.js, React, and Node.js to build full-stack applications.",
-      image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=2070",
+      title: "Getting Started with Microsoft Azure",
+      description: "Microsoft Azure is a cloud computing platform and service developed by Microsoft, offering a wide range of cloud services",
+      image: "https://azurelessons.com/wp-content/uploads/2020/04/How-does-Microsoft-Azure-Works-scaled.jpg",
       author: {
         name: "John Smith",
         avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070",
         role: "Senior Developer"
       },
-      category: "Web Development",
+      category: "Microsoft Azure",
       readTime: "8 min read",
       date: "Mar 15, 2024",
       tags: ["MERN", "Web Development", "JavaScript"]

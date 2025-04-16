@@ -31,7 +31,7 @@ const Courses = () => {
               data.courses.map((course, index) => (
                 <div
                   key={index}
-                  className="transform hover:scale-[1.02] transition duration-300 ease-in-out hover:shadow-xl -mt-4 w-full h-[450px]"
+                  className="transform hover:scale-[1.0] transition duration-300 ease-in-out -mt-4 w-full h-[450px]"
                 >
                   <Course course={course} />
                 </div>

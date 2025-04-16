@@ -80,7 +80,7 @@ const HeroSection = () => {
   return (
     <>
       {/* Carousel Section */}
-      <div className="-mt-14 w-screen bg-red-600">
+      <div className="-mt-14 w-screen">
         <HeroCarousel />
       </div>
 
