@@ -141,7 +141,7 @@ const handleSubscribe = async (e) => {
                 Quick Links
               </h4>
               <ul className="space-y-2 text-sm">
-                {[{ to: "/student/courses", text: "Explore Courses" }, { to: "/student/about", text: "About Us" }, { to: "/student/blogs", text: "Blog" }, { to: "/student/contact", text: "Contact" }, { to: "/student/faq", text: "FAQ" }].map((link) => (
+                {[{ to: "/courses", text: "Explore Courses" }, { to: "/about", text: "About Us" }, { to: "/blogs", text: "Blog" }, { to: "/student/contact", text: "Contact" }, { to: "/student/faq", text: "FAQ" }].map((link) => (
                   <li key={link.to}>
                     <Link
                       to={link.to}

@@ -12,7 +12,7 @@ export const blogData = [
       category: "Microsoft Azure",
       readTime: "8 min read",
       date: "Mar 15, 2024",
-      tags: ["MERN", "Web Development", "JavaScript"]
+      tags: ["Microsoft", "IBM", "Azure", "Cloud"],
     },
     {
       id: 2,
@@ -61,32 +61,34 @@ export const blogData = [
     },
     {
       id: 5,
-      title: "Mobile App Development Trends 2024",
-      description: "Explore the latest trends and technologies shaping the future of mobile app development.",
-      image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=2070",
+      title: "Amazon Web Services (AWS) for Beginners",
+      description: "A beginner's guide to understanding and using AWS for cloud computing.",
+      image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070",
+      
       author: {
         name: "David Kim",
         avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=2070",
-        role: "Mobile Developer"
+        role: "Cloud Consultant"
       },
-      category: "Mobile Development",
+      category: "Amazon Web Services",
       readTime: "7 min read",
       date: "Mar 11, 2024",
-      tags: ["Mobile", "iOS", "Android", "Trends"]
+      tags: ["AWS", "Cloud", "Beginners"]
     },
     {
       id: 6,
-      title: "Game Development with Unity",
-      description: "Step-by-step guide to creating your first game using Unity and C#.",
-      image: "https://images.unsplash.com/photo-1556438064-2d7646166914?q=80&w=2070",
+      title: "Quality Management in Software Development",
+      description: "Understanding the principles and practices of quality management in software development.",
+      image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070",
+      
       author: {
         name: "Emma Wilson",
         avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=2070",
-        role: "Game Developer"
+        role: "Quality Analyst"
       },
-      category: "Game Development",
+      category: "Quality Management",
       readTime: "20 min read",
       date: "Mar 10, 2024",
-      tags: ["Gaming", "Unity", "C#"]
+      tags: ["Quality", "Management", "Software"]
     }
   ];
