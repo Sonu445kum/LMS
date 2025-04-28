@@ -1,5 +1,5 @@
 import {v2 as cloudinary} from "cloudinary";
-
+import upload from "./Multer.js";
 import dotenv  from 'dotenv';
 dotenv.config({});
 
@@ -9,16 +9,17 @@ cloudinary.config({
     cloud_name:process.env.CLOUDINARY_NAME
 });
 
-export const uploadMedia = async(file)=>{
+export const uploadMedia = async (file) => {
     try {
-        const uploadResponse = await cloudinary.uploader.upload(file,{
-            resource_type:"auto"
-        });
-        return uploadResponse;
+      const uploadResponse = await cloudinary.uploader.upload(file, {
+        resource_type: "auto",
+      });
+      return uploadResponse;
     } catch (error) {
-        console.log(error);
+      console.log(error);
+      throw new Error("Failed to upload file to Cloudinary");
     }
-}
+  };
 //delete photo
 export const deleteMediaFromCloudinary = async(publicId)=>{
     try {

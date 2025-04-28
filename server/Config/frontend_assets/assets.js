@@ -960,17 +960,3 @@ export const certificates=[
     }
 ];
 
-//import data into the database
-const SendDataToDB = async () => {
-    try {
-    //   await Certification.deleteMany(); // Optional: clean existing data
-      const createdCerts = await Certification.insertMany(certifications);
-      console.log("Data imported successfully:", createdCerts);
-      process.exit();
-    } catch (err) {
-      console.error("Import failed:", err);
-      process.exit(1);
-    }
-  };
-
-  export default SendDataToDB;

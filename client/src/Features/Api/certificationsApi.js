@@ -4,94 +4,65 @@ const CERTIFICATION_API = "http://localhost:9000/api/v1/certifications";
 
 export const certificationApi = createApi({
   reducerPath: "certificationApi",
-  tagTypes: ["Refetch_Creator_Certification", "Refetch_Lecture"],
+  tagTypes: ["Certifications"],
   baseQuery: fetchBaseQuery({
     baseUrl: CERTIFICATION_API,
-    credentials: "include",
+    credentials: "include", // Include cookies for authentication if needed
   }),
   endpoints: (builder) => ({
-    createCertification: builder.mutation({
-      query: ({ name, description, issuer, category,file }) => ({
-        url: "/add",
-        method: "POST",
-        body: { name, description, issuer, category ,file},
-      }),
-      invalidatesTags: ["Refetch_Creator_Certification"],
-    }),
-
-    getSearchCertification: builder.query({
-      query: ({ searchQuery = "", categories = [], sortByPrice = "" }) => {
-        const params = new URLSearchParams();
-
-        if (searchQuery?.trim()) params.append("searchQuery", searchQuery.trim());
-        if (categories.length > 0) params.append("categories", categories.join(","));
-        if (sortByPrice) params.append("sort", sortByPrice);
-
-        const paramStr = params.toString();
-        return {
-          url: paramStr ? `/search?${paramStr}` : "/search",
-          method: "GET",
-        };
-      },
-    }),
-
-    getPublishedCertifications: builder.query({
-      query: () => ({
-        url: "/published-certifications",
-        method: "GET",
-      }),
-    }),
-
-    getCreatorCertifications: builder.query({
-      query: () => ({ url: "", method: "GET" }),
-      providesTags: ["Refetch_Creator_Certification"],
-    }),
-
+    // Fetch all certifications
     getAllCertifications: builder.query({
       query: () => ({
-        url: "/all", // 🔁 Adjust this if needed
+        url: "/all",
         method: "GET",
       }),
+      providesTags: ["Certifications"],
     }),
 
+    // Fetch a single certification by ID
     getCertificationById: builder.query({
-      query: (id) => `/${id}`, // Fix: Use only the ID
+      query: (id) => ({
+        url: `/${id}`,
+        method: "GET",
+      }),
+      providesTags: (result, error, id) => [{ type: "Certifications", id }],
     }),
 
-    editCertification: builder.mutation({
-      query: ({ certificationId, formData }) => ({
-        url: `/${certificationId}`,
+    // Create a new certification (Admin only)
+    createCertification: builder.mutation({
+      query: (formData) => ({
+        url: "/create",
+        method: "POST",
+        body: formData,
+      }),
+      invalidatesTags: ["Certifications"],
+    }),
+
+    // Update a certification (Admin only)
+    updateCertification: builder.mutation({
+      query: ({ id, formData }) => ({
+        url: `/update/${id}`,
         method: "PUT",
         body: formData,
       }),
-      invalidatesTags: ["Refetch_Creator_Certification"],
+      invalidatesTags: (result, error, { id }) => [{ type: "Certifications", id }],
     }),
 
+    // Delete a certification (Admin only)
     deleteCertification: builder.mutation({
-      query: (certificationId) => ({
-        url: `/${certificationId}`,
+      query: (id) => ({
+        url: `/delete/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Refetch_Creator_Certification"],
-    }),
-
-    publishCertification: builder.mutation({
-      query: ({ certificationId, query }) => ({
-        url: `/${certificationId}?publish=${query}`,
-        method: "PATCH",
-      }),
+      invalidatesTags: ["Certifications"],
     }),
   }),
 });
 
 export const {
-  useCreateCertificationMutation,
-  useGetSearchCertificationQuery,
-  useGetPublishedCertificationsQuery,
-  useGetCreatorCertificationsQuery,
-  useGetAllCertificationsQuery, // ✅ <- Exported here
-  useEditCertificationMutation,
+  useGetAllCertificationsQuery,
   useGetCertificationByIdQuery,
+  useCreateCertificationMutation,
+  useUpdateCertificationMutation,
   useDeleteCertificationMutation,
-  usePublishCertificationMutation,
 } = certificationApi;

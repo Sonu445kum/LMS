@@ -4,16 +4,16 @@ import { Link } from "react-router-dom";
 
 const CertificationsTable = () => {
   const { data: certifications, isLoading, isError } = useGetAllCertificationsQuery();
-  const [deleteCertification] = useDeleteCertificationMutation();
+  const [deleteCertification, { isLoading: isDeleting }] = useDeleteCertificationMutation();
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this certification?")) {
       try {
-        await deleteCertification(id);
+        await deleteCertification(id).unwrap(); // Ensure the mutation is unwrapped to handle errors
         alert("Certification deleted successfully!");
       } catch (error) {
         console.error("Failed to delete certification:", error);
-        alert("Failed to delete certification.");
+        alert("Failed to delete certification. Please try again.");
       }
     }
   };
@@ -32,22 +32,28 @@ const CertificationsTable = () => {
           <tr>
             <th className="border border-gray-300 p-2">Name</th>
             <th className="border border-gray-300 p-2">Category</th>
-            <th className="border border-gray-300 p-2">Issuer</th>
+            <th className="border border-gray-300 p-2">Price</th>
+            <th className="border border-gray-300 p-2">Duration</th>
             <th className="border border-gray-300 p-2">Actions</th>
           </tr>
         </thead>
         <tbody>
           {certifications?.map((cert) => (
             <tr key={cert._id}>
-              <td className="border border-gray-300 p-2">{cert.name}</td>
+              <td className="border border-gray-300 p-2">{cert.title}</td>
               <td className="border border-gray-300 p-2">{cert.category}</td>
-              <td className="border border-gray-300 p-2">{cert.issuer}</td>
+              <td className="border border-gray-300 p-2">${cert.price}</td>
+              <td className="border border-gray-300 p-2">{cert.duration}</td>
               <td className="border border-gray-300 p-2">
                 <Link to={`/admin/certifications/edit-certification/${cert._id}`} className="text-blue-500 mr-2">
                   Edit
                 </Link>
-                <button onClick={() => handleDelete(cert._id)} className="text-red-500">
-                  Delete
+                <button
+                  onClick={() => handleDelete(cert._id)}
+                  className={`text-red-500 ${isDeleting ? "opacity-50 cursor-not-allowed" : ""}`}
+                  disabled={isDeleting}
+                >
+                  {isDeleting ? "Deleting..." : "Delete"}
                 </button>
               </td>
             </tr>

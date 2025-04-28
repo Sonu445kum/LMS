@@ -1,160 +1,175 @@
 import Certification from "../Models/Certifications.Model.js";
-import fs from "fs";
-import { uploadMedia, deleteMediaFromCloudinary, deleteVideoFromCloudinary } from "../Utils/Cloudinary.js";
-// getAllCertifications
-export const getAllCertifications = async (req, res) => {
+import { uploadMedia, deleteMediaFromCloudinary } from "../Utils/Cloudinary.js";
+
+// Upload a new certification
+export const uploadCertification = async (req, res) => {
   try {
-    const certifications = await Certification.find().sort({ createdAt: -1 });
-    res.status(200).json(certifications);
-  } catch (error) {
-    res.status(500).json({ message: "Failed to fetch certifications", error });
-  }
-};
-// Create Certification
- export const createCertification = async (req, res) => {
-  try {
-    const { name, description, issuer, issuedDate, category } = req.body;
-    const userId = req.user.id;  // Access userId from req.user
+    console.log("Request body:", req.body);
+    console.log("Uploaded file:", req.file);
 
-    let fileUrl = null;
-    let publicId = null;
-    let fileType = null;
+    const {
+      id,
+      title,
+      description,
+      category,
+      price,
+      duration,
+      tag,
+      tagColor,
+      introduction,
+      key_1,
+      key_2,
+      key_3,
+      Course_Benefits,
+      Course_Benefits_2,
+      Course_Benefits_3,
+      Road_map,
+    } = req.body;
 
-    if (req.file) {
-      const result = await uploadMedia(req.file.path);
-      fileUrl = result.secure_url;
-      publicId = result.public_id;
-      fileType = result.resource_type;
-
-      fs.unlinkSync(req.file.path); // remove local file
+    if (!req.file) {
+      return res.status(400).json({ error: "File is required" });
     }
+
+    const file = req.file.path;
+
+    const uploadResponse = await uploadMedia(file);
 
     const certification = new Certification({
-      userId,
-      name,
+      id,
+      title,
       description,
-      issuer,
-      issuedDate,
       category,
-      fileUrl,
-      fileType,
-      publicId
+      price,
+      duration,
+      tag,
+      tagColor,
+      introduction,
+      key_1,
+      key_2,
+      key_3,
+      Course_Benefits,
+      Course_Benefits_2,
+      Course_Benefits_3,
+      Road_map,
+      image: uploadResponse.secure_url,
+      publicId: uploadResponse.public_id,
     });
 
-    await certification.save();
-    res.status(201).json({ message: "Certification created successfully", certification });
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Failed to create certification", error });
+    const savedCertification = await certification.save();
+    res.status(201).json(savedCertification);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: err.message });
   }
 };
 
-// Get Certification by ID
-// export const getCertificationById = async (req, res) => {
-//   try {
-//     const cert = await Certification.findById(req.params.id);
-//     if (!cert) return res.status(404).json({ message: "Certification not found" });
-//     res.status(200).json(cert);
-//   } catch (error) {
-//     res.status(500).json({ message: "Failed to fetch certification", error });
-//   }
-// };
-
-import mongoose from "mongoose";
-
-export const getCertificationById = async (req, res) => {
+// Update a certification
+export const updateCertification = async (req, res) => {
   try {
-    const { id } = req.params;
+    console.log("Request Params:", req.params); // Log the route parameters
+    console.log("Request Body:", req.body); // Log the request body
 
-    // Validate the ID
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ message: "Invalid certification ID" });
+    const { id } = req.params;
+    const {
+      title,
+      description,
+      category,
+      price,
+      duration,
+      tag,
+      tagColor,
+      introduction,
+      key_1,
+      key_2,
+      key_3,
+      Course_Benefits,
+      Course_Benefits_2,
+      Course_Benefits_3,
+      Road_map,
+    } = req.body;
+
+    if (!id) {
+      return res.status(400).json({ message: "ID is required" });
     }
 
-    // Fetch the certification from the database
     const certification = await Certification.findById(id);
-
     if (!certification) {
       return res.status(404).json({ message: "Certification not found" });
     }
 
-    res.status(200).json(certification);
-  } catch (error) {
-    console.error("Error fetching certification by ID:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    // Update fields
+    certification.title = title || certification.title;
+    certification.description = description || certification.description;
+    certification.category = category || certification.category;
+    certification.price = price || certification.price;
+    certification.duration = duration || certification.duration;
+    certification.tag = tag || certification.tag;
+    certification.tagColor = tagColor || certification.tagColor;
+    certification.introduction = introduction || certification.introduction;
+    certification.key_1 = key_1 || certification.key_1;
+    certification.key_2 = key_2 || certification.key_2;
+    certification.key_3 = key_3 || certification.key_3;
+    certification.Course_Benefits = Course_Benefits || certification.Course_Benefits;
+    certification.Course_Benefits_2 = Course_Benefits_2 || certification.Course_Benefits_2;
+    certification.Course_Benefits_3 = Course_Benefits_3 || certification.Course_Benefits_3;
+    certification.Road_map = Road_map || certification.Road_map;
+
+    const updatedCertification = await certification.save();
+    res.status(200).json(updatedCertification);
+  } catch (err) {
+    console.error("Error updating certification:", err.message);
+    res.status(500).json({ error: err.message });
   }
 };
 
-// Get Certifications by Category
-export const getCertificationsByCategory = async (req, res) => {
-  try {
-    const category = req.params.category;
-    const certs = await Certification.find({ category });
-    res.status(200).json(certs);
-  } catch (error) {
-    res.status(500).json({ message: "Failed to fetch certifications", error });
-  }
-};
+// Delete a certification
 
-// Update Certification
-export const updateCertification = async (req, res) => {
-  try {
-    const cert = await Certification.findById(req.params.id);
-    if (!cert) return res.status(404).json({ message: "Certification not found" });
 
-    const { name, description, issuer, issuedDate, category } = req.body;
-
-    if (req.file) {
-      // Delete old file from Cloudinary
-      if (cert.fileType === "video") {
-        await deleteVideoFromCloudinary(cert.publicId);
-      } else {
-        await deleteMediaFromCloudinary(cert.publicId);
-      }
-
-      // Upload new file
-      const result = await uploadMedia(req.file.path);
-      cert.fileUrl = result.secure_url;
-      cert.publicId = result.public_id;
-      cert.fileType = result.resource_type;
-
-      fs.unlinkSync(req.file.path); // remove local
-    }
-
-    cert.name = name || cert.name;
-    cert.description = description || cert.description;
-    cert.issuer = issuer || cert.issuer;
-    cert.issuedDate = issuedDate || cert.issuedDate;
-    cert.category = category || cert.category;
-
-    await cert.save();
-    res.status(200).json({ message: "Certification updated", certification: cert });
-
-  } catch (error) {
-    res.status(500).json({ message: "Update failed", error });
-  }
-};
-
-// Delete Certification
 export const deleteCertification = async (req, res) => {
   try {
-    const cert = await Certification.findById(req.params.id);
-    if (!cert) return res.status(404).json({ message: "Certification not found" });
+    const { id } = req.params;
 
-    // Delete file from Cloudinary
-    if (cert.fileType === "video") {
-      await deleteVideoFromCloudinary(cert.publicId);
-    } else {
-      await deleteMediaFromCloudinary(cert.publicId);
+    // Find the certification by ID
+    const certification = await Certification.findById(id);
+    if (!certification) {
+      return res.status(404).json({ message: "Certification not found" });
     }
 
-    await cert.deleteOne();
-    res.status(200).json({ message: "Certification deleted successfully" });
+    // If the certification has an associated image, delete it from Cloudinary
+    if (certification.publicId) {
+      await deleteMediaFromCloudinary(certification.publicId); // Use the utility function to delete the media
+    }
 
-  } catch (error) {
-    res.status(500).json({ message: "Deletion failed", error });
+    // Delete the certification from the database
+    await Certification.findByIdAndDelete(id);
+
+    res.status(200).json({ message: "Certification deleted successfully" });
+  } catch (err) {
+    console.error("Error deleting certification:", err.message);
+    res.status(500).json({ error: err.message });
   }
 };
-//export default
 
+// Get all certifications
+export const getAllCertifications = async (req, res) => {
+  try {
+    const certifications = await Certification.find();
+    res.status(200).json(certifications);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Get a certification by ID
+export const getCertificationById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const certification = await Certification.findById(id);
+    if (!certification) {
+      return res.status(404).json({ message: "Certification not found" });
+    }
+    res.status(200).json(certification);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
