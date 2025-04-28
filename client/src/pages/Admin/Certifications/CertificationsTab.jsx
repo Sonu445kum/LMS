@@ -16,5 +16,4 @@ const CertificationsTab = () => {
     </div>
   );
 };
-
 export default CertificationsTab;
