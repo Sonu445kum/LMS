@@ -154,9 +154,10 @@ export const deleteCertification = async (req, res) => {
 export const getAllCertifications = async (req, res) => {
   try {
     const certifications = await Certification.find();
-    res.status(200).json(certifications);
+    res.status(200).json(certifications); // Return array directly
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch certifications" });
   }
 };
 
@@ -171,5 +172,35 @@ export const getCertificationById = async (req, res) => {
     res.status(200).json(certification);
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+};
+
+//
+export const getCertificationAssets = async (req, res) => {
+  const { certificationId } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(certificationId)) {
+    return res.status(400).json({ error: "Invalid certification ID" });
+  }
+
+  try {
+    const cert = await Certification.findById(certificationId);
+    if (!cert) {
+      return res.status(404).json({ error: "Certification not found" });
+    }
+
+    // Return certification assets
+    const assets = {
+      imageUrl: cert.imageUrl,
+      title: cert.title,
+      description: cert.description,
+      issuedBy: cert.issuedBy,
+      duration: cert.duration,
+      validity: cert.validity
+    };
+
+    res.status(200).json(assets);
+  } catch (error) {
+    res.status(500).json({ error: "Server error", details: error.message });
   }
 };

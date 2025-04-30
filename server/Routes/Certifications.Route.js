@@ -6,6 +6,7 @@ import {
   deleteCertification,
   getAllCertifications,
   getCertificationById,
+  getCertificationAssets,
 } from "../Controllers/Certifications.Controller.js";
 import isAuthenticated from "../Middlewares/isAuthenticated.js";
 
@@ -25,5 +26,6 @@ router.get("/all", getAllCertifications);
 
 // Get a certification by ID (public route)
 router.get("/:id", getCertificationById);
+router.get('/:certificationId/assets', getCertificationAssets);
 
 export default router;

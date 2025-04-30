@@ -1,44 +1,85 @@
+import AWS_Dev_as from "./AWS-Dev-as.png"
+import AWS_cloud from "./AWS-cloud.png"
+import AWS_SAP from "./AWS-SAP.png"
+import AWS_SAA from "./AWS-SAA.png"
+import PMI_ACP from "./PMI-ACP.jpeg"
+import CAPM from "./CAPM.jpeg"
+import PGMP from "./PGMP.jpeg"
+import PMP from "./PMP.jpeg"
+import PMI_RMP from "./PMI-RMP.png"
+import PMI_PBA from "./PMI-PBA.png"
+import PMI_CP from "./PMI-CP.jpeg"
+import Pfmp from "./pfmp.jpeg"
+import CISSP from "./CISSP.png"
+import CISM from "./CISM.jpeg"
+import CISA from "./CISA.jpeg"
+import CRISC from "./CRISC.jpeg"
+import sigma1 from "./sigma1.webp"
+import sigma2 from "./sigma2.png"
+import sigma3 from "./sigma3.jpeg"
+import sigma4 from "./sigma4.jpeg"
+import sigma5 from "./sigma5.webp"
+import sigma6 from "./sigma6.png"
+import CCIE from "./CCIE.webp"
+import CCNA from "./CCNA.webp"
+import CCNP from "./CCNP.webp"
+import CEH from "./CEH-Logo.png"
+import CHFI from "./CHFI.jpeg"
+import CSM from "./CSM.webp"
+import CSPO from "./CSPO.jpeg"
+import Microsoft_Azure  from "./Microsoft_Azure.webp"
+import microsoft_fundamental from "./microsoft_fundamental.png"
+import Administrator_Associate from "./ADA.png"
+import Azure_Developer from "./DAC.png"
+import Azure_Solutions from "./ASA.png"
+import  AI_Engineer from "./AI.png"
+import DATA_Science from "./DATA_S.png"
+import Power_BI from "./Power_BI.png"
+import Azure_roadmap from "./Azure_roadmap.png"
 
-export const assets = {
-    Azure_roadmap: "https://example.com/azure-roadmap.png",
-    Administrator_Associate: "https://example.com/administrator-associate.png",
-    Power_BI: "https://example.com/power-bi.png",
-    DATA_Science: "https://example.com/data-science.png",
-    AI_Engineer: "https://example.com/ai-engineer.png",
-    Azure_Solutions: "https://example.com/azure-solutions.png",
-    Azure_Developer: "https://example.com/azure-developer.png",
-    AWS_Dev_as: "https://example.com/aws-dev-as.png",
-    AWS_cloud: "https://example.com/aws-cloud.png",
-    AWS_SAP: "https://example.com/aws-sap.png",
-    AWS_SAA: "https://example.com/aws-saa.png",
-    Microsoft_Azure: "https://example.com/microsoft-azure.png",
-    PMI_ACP: "https://example.com/pmi-acp.png",
-    CAPM: "https://example.com/capm.png",
-    PGMP: "https://example.com/pgmp.png",
-    PMP: "https://example.com/pmp.png",
-    PMI_RMP: "https://example.com/pmi-rmp.png",
-    PMI_PBA: "https://example.com/pmi-pba.png",
-    PMI_CP: "https://example.com/pmi-cp.png",
-    Pfmp: "https://example.com/pfmp.png",
-    CISSP: "https://example.com/cissp.png",
-    CISM: "https://example.com/cism.png",
-    CISA: "https://example.com/cisa.png",
-    CRISC: "https://example.com/crisc.png",
-    sigma1: "https://example.com/sigma1.png",
-    sigma2: "https://example.com/sigma2.png",
-    sigma3: "https://example.com/sigma3.png",
-    sigma4: "https://example.com/sigma4.png",
-    sigma5: "https://example.com/sigma5.png",
-    sigma6: "https://example.com/sigma6.png",
-    CCIE: "https://example.com/ccie.png",
-    CCNA: "https://example.com/ccna.png",
-    CCNP: "https://example.com/ccnp.png",
-    CEH: "https://example.com/ceh.png",
-    CHFI: "https://example.com/chfi.png",
-    CSM: "https://example.com/csm.png",
-    CSPO: "https://example.com/cspo.png",
-    microsoft_fundamental: "https://example.com/microsoft-fundamental.png",
-};
+
+export const assets= {
+    Azure_roadmap,
+    Administrator_Associate,
+    Power_BI,
+    DATA_Science,
+    AI_Engineer,
+    Azure_Solutions,
+    Azure_Developer,
+    AWS_Dev_as,
+    AWS_cloud,
+    AWS_SAP,
+    AWS_SAA,
+    Microsoft_Azure,
+    PMI_ACP,
+    CAPM,
+    PGMP,
+    PMP,
+    PMI_RMP,
+    PMI_PBA,
+    PMI_CP,
+    Pfmp,
+    CISSP,
+    CISM,
+    CISA,
+    CRISC,
+    sigma1,
+    sigma2,
+    sigma3,
+    sigma4,
+    sigma5,
+    sigma6,
+    CCIE,
+    CCNA,
+    CCNP,
+    CEH,
+    CHFI,
+    CSM,
+    CSPO,
+    microsoft_fundamental
+
+    
+}
 
 export const certificates=[
 
@@ -47,7 +88,7 @@ export const certificates=[
             {
                 id:"project_management_1",
                 title:"PMI ACP",
-                image:'PMI_ACP',
+                image:['PMI_ACP'],
                 description:"Agile Certified Practitioner (ACP) certification by Project Management Institute (PMI).",
                 category:"project_management",
                 price:1499,
@@ -70,7 +111,7 @@ export const certificates=[
             {
                 id:"project_management_2",
                 title:"CAPM",
-                image:'CAPM',
+                image:[CAPM],
                 description:"Certified Associate in Project Management (CAPM) certification by Project Management Institute (PMI).",
                 category:"project_management",
                 price:"999",
@@ -97,7 +138,7 @@ export const certificates=[
             {
                 id:"project_management_3",
                 title:"PGMP",
-                image:'PGMP',
+                image:[PGMP],
                 description:"Program Management Professional (PgMP) certification by Project Management Institute (PMI).",
                 category:"project_management",
                 price:"1999",
@@ -119,7 +160,7 @@ export const certificates=[
             {
                 id:"project_management_4",
                 title:"PMP",
-                image:'PMP',
+                image:[PMP],
                 description:"Project Management Professional (PMP) certification by Project Management Institute (PMI).",
                 category:"project_management",
                 price:"1499",
@@ -141,7 +182,7 @@ export const certificates=[
             {
                 id:"project_management_5",
                 title:"RMP",
-                image:'PMI_RMP',
+                image:[PMI_RMP],
                 description:"Risk Management Professional (RMP) certification by Project Management Institute (PMI).",
                 category:"project_management",
                 price:"1499",
@@ -164,7 +205,7 @@ export const certificates=[
             {
                 id:"project_management_6",
                 title:"PBA",
-                image:'PMI_PBA',
+                image:[PMI_PBA],
                 description:"Professional in Business Analysis (PBA) certification by Project Management Institute (PMI).",
                 category:"project_management",
                 price:"1249",
@@ -187,7 +228,7 @@ export const certificates=[
             {
                 id:"project_management_7",
                 title:"PfMP",
-                image:"Pfmp",
+                image:[Pfmp],
                 description:"Portfolio Management Professional (PfMP) certification by Project Management Institute (PMI).",
                 category:"project_management",
                 price:"1999" ,
@@ -210,7 +251,7 @@ export const certificates=[
             {
                 id:"project_management_8",
                 title:"PMI-CP",
-                image:'PMI_CP',
+                image:[PMI_CP],
                 description:"Construction Professional (CP) certification by Project Management Institute (PMI).",
                 category:"project_management",
                 price:"1449",
@@ -233,7 +274,7 @@ export const certificates=[
             {
                 id:"information_security_1",
                 title:"CRISC",
-                image:'CRISC',
+                image:[CRISC],
                 description:"Certified in Risk and Information Systems Control (CRISC) certification by Information Systems Audit and Control Association (ISACA).",
                 category:"information_security",
                 price:"1999",
@@ -254,7 +295,7 @@ export const certificates=[
             {
                 id:"information_security_2",
                 title:"CISM",
-                image:'CISM',
+                image:[CISM],
                 description:"Certified Information Security Manager (CISM) certification.",
                 category:"information_security",
                 price:"1799",
@@ -275,7 +316,7 @@ export const certificates=[
             {
                 id:"information_security_3",
                 title:"CISSP",
-                image:'CISSP',
+                image:[CISSP],
                 description:"Certified Information Systems Security Professional (CISSP) certification by The International Information Systems Security Certification Consortium (ISC2).",
                 category:"information_security",
                 price:"1599",
@@ -297,7 +338,7 @@ export const certificates=[
             {
                 id:"information_security_4",
                 title:"CISA",
-                image:'CISA',
+                image:[CISA],
                 description:"Certified Information Systems Auditor (CISA) certification by Information Systems Audit and Control Association (ISACA).",
                 category:"information_security",
                 price:"1599",
@@ -321,7 +362,7 @@ export const certificates=[
             {
                 id:"quality_management_1",
                 title:"Lean Six Sigma Black Belt",
-                image:'sigma1',
+                image:[sigma1],
                 description:"Lean Six Sigma Black Belt (LSSBB) certification by International Association for Six Sigma Certification (IASSC).",
                 category:"quality_management",
                 price:"749.00",
@@ -344,7 +385,7 @@ export const certificates=[
             {
                 id:"quality_management_2",
                 title:"Lean Six Sigma  Green Belt",
-                image:"sigma2",
+                image:[sigma2],
                 description:"Lean Six Sigma Green Belt (LSSGB) certification by International Association for Six Sigma Certification (IASSC).",
                 category:"quality_management",
                 price:"749.00",
@@ -366,7 +407,7 @@ export const certificates=[
             {
                 id:"quality_management_3",
                 title:"Six Sigma Black Belt",
-                image:'sigma3',
+                image:[sigma3],
                 description:"Six Sigma Black Belt (SSBB) certification by International Association for Six Sigma Certification (IASSC).",
                 category:"quality_management",
                 price:"749.00",
@@ -390,7 +431,7 @@ export const certificates=[
             {
                 id:"quality_management_4",
                 title:"Six Sigma Green Belt",
-                image:'sigma4',
+                image:[sigma4],
                 description:"Six Sigma Green Belt (SSGB) certification by International Association for Six Sigma Certification (IASSC).",
                 category:"quality_management",
                 price:"749.00",
@@ -411,7 +452,7 @@ export const certificates=[
             {
                 id:"quality_management_5",
                 title:"Six Sigma Yellow Belt",
-                image:"sigma5",
+                image:[sigma5],
                 description:"Six Sigma Yellow Belt (SSYB) certification by International Association for Six Sigma Certification (IASSC).",
                 category:"quality_management",
                 price:"749.00",
@@ -432,7 +473,7 @@ export const certificates=[
             {
                 id:"quality_management_6",
                 title:"Six Sigma White Belt",
-                image:'sigma6',
+                image:[sigma6],
                 description:"Six Sigma White Belt (SSWB) certification by International Association for Six Sigma Certification (IASSC).",
                 category:"quality_management",
                 price:"749.00" ,
@@ -461,7 +502,7 @@ export const certificates=[
             {
                 id:"networking_certifications_1",
                 title:"CCNA",
-                image:'CCNA',
+                image:[CCNA],
                 description:"Cisco Certified Network Associate (CCNA) is an entry-level IT certification from Cisco Systems.",
                 category:"networking_certifications",
                 price:"749.00",
@@ -485,7 +526,7 @@ export const certificates=[
             {
                 id:"networking_certifications_2",
                 title:"CCNP",
-                image:'CCNP',
+                image:[CCNP],
                 description:"Cisco Certified Network Professional (CCNP) is a professional-level certification from Cisco Systems.",
                 category:"networking_certifications",
                 price:"749.00",
@@ -506,7 +547,7 @@ export const certificates=[
             {
                 id:"networking_certifications_3",
                 title:"CCIE",
-                image:"CCIE",
+                image:[CCIE],
                 description:"Cisco Certified Internetwork Expert (CCIE) is a professional-level certification from Cisco Systems.",
                 category:"networking_certifications",
                 price:"749.00",
@@ -532,7 +573,7 @@ export const certificates=[
             {
                 id:"cyber_security_1",
                 title:"CEH",
-                image:"CEH",
+                image:[CEH],
                 description:"Certified Ethical Hacker (CEH) certification by International Council of E-Commerce Consultants (EC-Council).",
                 category:"cyber_security",
                 price:"749.00",
@@ -554,7 +595,7 @@ export const certificates=[
             {
                 id:"cyber_security_2",
                 title:"CHFI",
-                image:"CHFI",
+                image:[CHFI],
                 description:"Computer Hacking Forensic Investigator (CHFI) certification by International Council of E-Commerce Consultants (EC-Council).",
                 category:"cyber_security",
                 price:"749.00",
@@ -578,7 +619,7 @@ export const certificates=[
             {
                 id:"scrum_agile_1",
                 title:"CSPO",
-                image:"CSPO",
+                image:[CSPO],
                 description:"Certified Scrum Product Owner (CSPO) certification by Scrum Alliance.",
                 category:"scrum_agile",
                 price:"749.00",
@@ -599,7 +640,7 @@ export const certificates=[
             {
                 id:"scrum_agile_2",
                 title:"CSM",
-                image:'CSM',
+                image:[CSM],
                 description:"The Certified Scrum Master (CSM) certification administered by the Scrum Alliance.",
                 category:"scrum_agile",
                 price:"749.00",
@@ -623,7 +664,7 @@ export const certificates=[
             {
                 id:"microsoft_certifications_1",
                 title:"Microsoft Azure",
-                image:"DATA_Science",
+                image:[DATA_Science],
                 description:"Microsoft Azure certification validate skills in cloud computing, from basic concepts to specialized roles.",
                 category:"microsoft_certifications",
                 price:"499.00",
@@ -641,13 +682,13 @@ export const certificates=[
                 Course_Benefits:"Industry-Recognized Certification: Boost your resume and stand out with a globally accepted Microsoft Azure certification.",
                 Course_Benefits_2:"Career Advancement: Unlock high-paying job roles in cloud computing, including Cloud Administrator, Azure Developer, and Solutions Architect.",
                 Course_Benefits_3:"Flexible Learning Path: Whether you're a beginner or upskilling professional, the course is designed to fit various experience levels.",
-                Road_map:"Azure_roadmap",
+                Road_map:[Azure_roadmap],
                 
             },
             {
                 id:"microsoft_certifications_2",
                 title:"Azure Administrator Associate(AZ-104)",
-                image:"Administrator_Associate",
+                image:[Administrator_Associate],
                 description:"Demonstrate key skills to configure, manage, secure, and administer key professional functions in Microsoft Azure.",
                 category:"microsoft_certifications",
                 price:"499.00",
@@ -662,13 +703,13 @@ export const certificates=[
                 Course_Benefits:"Hands-On Learning: Practical labs and case studies to apply your knowledge in real-world environments",
                 Course_Benefits_2:"High-Demand Career Paths: Qualify for roles like Azure Administrator, Cloud Operations Engineer, and Infrastructure Specialist",
                 Course_Benefits_3:"Scalable Career Growth: Azure is one of the most adopted cloud platforms—certification opens doors to long-term cloud career success",
-                Road_map:"Azure_roadmap",
+                Road_map:[Azure_roadmap],
             },
 
             {
                 id:"microsoft_certifications_3",
                 title:"Azure Fundamentals(AZ-900)",
-                image:'microsoft_fundamental',
+                image:[microsoft_fundamental],
                 description:"Demonstrate foundational knowledge of cloud concepts, core Azure services, plus Azure management and governance features and tools.",
                 category:"microsoft_certifications",
                 price:"499.00",
@@ -685,7 +726,7 @@ export const certificates=[
                 Course_Benefits:"Globally Recognized Certification: Earn a Microsoft credential that stands out in any industry",
                 Course_Benefits_2:"Boost Your Confidence: Understand cloud terminology and concepts used across cloud platforms",
                 Course_Benefits_3:"Career Versatility: Certification enhances your profile whether you’re in tech, sales, support, or management",
-                Road_map:"Azure_roadmap",
+                Road_map:[Azure_roadmap],
             },
 
             {

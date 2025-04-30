@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-     "send": "node Database/SendData.js"
+    "send": "node Database/SendData.js"
   },
   "keywords": [],
   "author": "",
@@ -27,6 +27,7 @@
     "path": "^0.12.7",
     "razorpay": "^2.9.6",
     "stripe": "^18.0.0",
+    "url": "^0.11.4",
     "winston": "^3.17.0"
   }
 }

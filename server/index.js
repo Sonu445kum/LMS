@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import connectDB from "./Database/db.js";
+import { fileURLToPath } from "url";
+import path from "path";
 
 
 //import All Routes
@@ -14,15 +16,17 @@ import CoursePurchaseRoutes from "./Routes/CoursePurchase.Route.js";
 import CourseProgressRoutes from "./Routes/CourseProgress.Route.js";
 import CertificationsRoutes from "./Routes/Certifications.Route.js";
 dotenv.config();
-import path from "path";
+
 connectDB();
 const PORT = process.env.PORT || 8080;
 
-const __dirname = path.resolve(); // Get the root directory
+ // Get the root directory
+// Get the directory name
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Serve static files from the "Config/frontend_assets" folder
-app.use("/assets", express.static(path.join(__dirname, "Config/frontend_assets/assets.js")));
-
+app.use("/frontend_assets", express.static(path.join(__dirname, "backendassets/frontend_assets")));
 // default middlewares
 app.use(express.json());
 app.use(cookieParser());
