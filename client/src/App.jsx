@@ -62,7 +62,8 @@ const appRouter = createBrowserRouter([
         element: (
           <>
             <HeroSection />
-            <DisplayCertificates />
+            {/* <DisplayCertificates /> */}
+            <CertificationsList />
             <Courses />
             <DisplayAllContent />
           </>
