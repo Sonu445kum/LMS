@@ -50,6 +50,7 @@ import CertificationDropdown from "./pages/CertificationDropDown";
 import DisplayAllContent from "./pages/Students/DisplayAllContent";
 import DisplayCertificates from "./pages/Students/DisplayCertificates";
 import ViewMore from "./pages/Students/ViewMore";
+import CertificationsList from "./pages/Students/CertificationsList";
 
 const appRouter = createBrowserRouter([
   {
@@ -77,6 +78,10 @@ const appRouter = createBrowserRouter([
       {
         path: "certification/:category/:id",
         element: <CertificationFullDetails />,
+      },
+      {
+        path: "certifications/:id",
+        element:<CertificationsList />,
       },
 
       { path: "login", element: <AuthenticatedUser><Login /></AuthenticatedUser> },

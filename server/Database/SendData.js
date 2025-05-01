@@ -49,23 +49,66 @@ const getImageFiles = () => {
 };
 
 // Function to create certification records from image files and assets mappings
-const createCertificationRecords = (imageFiles, imageMappings) => {
-  return imageFiles.map((file) => {
-    const fileName = path.basename(file, path.extname(file));
-    const title = fileName.replace(/_/g, " ");
-    const category = ""; // Default category
+// const createCertificationRecords = (imageFiles, imageMappings) => {
+//   return imageFiles.map((file) => {
+//     const fileName = path.basename(file, path.extname(file));
+//     const title = fileName.replace(/_/g, " ");
+//     const category = ""; // Default category
 
-    return {
-      title: title,
-      description: `Description for ${title}`,
-      price: 499,
-      image: `/frontend_assets/${file}`, // Correct path for serving images
-      publicId: fileName,
-      category: category,
-      duration: "6 months",
-    };
-  });
-};
+//     return {
+//       title: title,
+//       description: `Description for ${title}`,
+//       price: 499,
+//       image: `/frontend_assets/${file}`, // Correct path for serving images
+//       publicId: fileName,
+//       category: category,
+//       duration: "6 months",
+//     };
+//   });
+// };
+
+const createCertificationRecords = (imageFiles, imageMappings) => {
+    return imageFiles.map((file) => {
+      const fileName = path.basename(file, path.extname(file));
+      const title = fileName.replace(/_/g, " ");
+  
+      // Determine the category based on keywords in the file name
+      let category = "General"; // Default category
+      if (fileName.toLowerCase().includes("aws")) category = "AWS";
+      else if (fileName.toLowerCase().includes("azure") || fileName.toLowerCase().includes("microsoft"))
+        category = "Microsoft";
+      else if (fileName.toLowerCase().includes("pmp") || fileName.toLowerCase().includes("pmi"))
+        category = "Project Management";
+      else if (fileName.toLowerCase().includes("cissp") || fileName.toLowerCase().includes("cism"))
+        category = "Information Security";
+      else if (fileName.toLowerCase().includes("sigma")) category = "Six Sigma";
+      else if (fileName.toLowerCase().includes("ccna") || fileName.toLowerCase().includes("ccnp"))
+        category = "Networking";
+      else if (fileName.toLowerCase().includes("ceh") || fileName.toLowerCase().includes("chfi"))
+        category = "Cybersecurity";
+      else if (fileName.toLowerCase().includes("cspo") || fileName.toLowerCase().includes("csm"))
+        category = "Scrum/Agile";
+      else if (fileName.toLowerCase().includes("sap")) category = "SAP";
+  
+      // Determine the duration based on the category or keywords
+      let duration = "6 months"; // Default duration
+      if (category === "AWS" || category === "Microsoft") duration = "12 months";
+      else if (category === "Project Management" || category === "Information Security") duration = "9 months";
+      else if (category === "Six Sigma" || category === "Networking") duration = "8 months";
+      else if (category === "Cybersecurity" || category === "Scrum/Agile") duration = "6 months";
+      else if (category === "SAP") duration = "10 months";
+  
+      return {
+        title: title,
+        description: `Description for ${title}`,
+        price: 499,
+        image: `/frontend_assets/${file}`, // Correct path for serving images
+        publicId: fileName,
+        category: category, // Dynamically determined category
+        duration: duration, // Dynamically determined duration
+      };
+    });
+  };
 
 const sendDataToDB = async () => {
   try {

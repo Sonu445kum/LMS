@@ -43,7 +43,7 @@ const DisplayCertificates = () => {
             <p className="text-sm text-gray-600">{cert.duration}</p>
             <p className="text-sm text-gray-600">{cert.description}</p>
             <Link
-              to={`/${cert._id}`}
+              to={`/certifications/${cert._id}`}
               className="text-blue-500 hover:underline mt-2 block"
             >
               View More
