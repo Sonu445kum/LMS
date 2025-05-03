@@ -10,7 +10,7 @@ import HeroSection from "./pages/Students/HeroSection";
 import Courses from "./pages/Students/Courses";
 import About from "./pages/About";
 import Blogs from "./pages/Blogs";
-import CertificationPage from "./pages/CertificationPage";
+
 import CertificationFullDetails from "./pages/CertificationFullDetails";
 import Login from "./pages/Login";
 
@@ -46,11 +46,11 @@ import CertificationsTab from "./pages/Admin/Certifications/CertificationsTab";
 import CertificationsTable from "./pages/Admin/Certifications/CertificationsTable";
 import AddCertifications from "./pages/Admin/Certifications/AddCertifications";
 import EditCertifications from "./pages/Admin/Certifications/EditCertifications";
-import CertificationDropdown from "./pages/CertificationDropDown";
+
 import DisplayAllContent from "./pages/Students/DisplayAllContent";
 import DisplayCertificates from "./pages/Students/DisplayCertificates";
 import ViewMore from "./pages/Students/ViewMore";
-import CertificationsList from "./pages/Students/CertificationsList";
+// import CertificationListing from "./pages/CertificationListing";
 
 const appRouter = createBrowserRouter([
   {
@@ -62,10 +62,12 @@ const appRouter = createBrowserRouter([
         element: (
           <>
             <HeroSection />
-            {/* <DisplayCertificates /> */}
-            <CertificationsList />
+            {/* <CertificationListing/> */}
+            <DisplayCertificates />
+            
             <Courses />
             <DisplayAllContent />
+            
           </>
         ),
       },
@@ -75,16 +77,19 @@ const appRouter = createBrowserRouter([
       },
       { path: "about", element: <About /> },
       { path: "blogs", element: <Blogs /> },
-      { path: "certifications", element: <CertificationPage /> },
+      
+      {
+        path: "certification/:id",
+        element: <CertificationFullDetails />,
+      },
       {
         path: "certification/:category/:id",
         element: <CertificationFullDetails />,
       },
       {
-        path: "certifications/:id",
-        element:<CertificationsList />,
+        path: "student/certifications",
+        element: <DisplayCertificates />, // Add this route
       },
-
       { path: "login", element: <AuthenticatedUser><Login /></AuthenticatedUser> },
       { path: "my-learning", element: <ProtectedRoute><MyLearning /></ProtectedRoute> },
       { path: "profile", element: <ProtectedRoute><Profile /></ProtectedRoute> },

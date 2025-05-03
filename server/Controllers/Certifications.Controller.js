@@ -23,7 +23,9 @@ export const uploadCertification = async (req, res) => {
       Course_Benefits,
       Course_Benefits_2,
       Course_Benefits_3,
+      certificationPdf,
       Road_map,
+      
     } = req.body;
 
     if (!req.file) {
@@ -53,6 +55,7 @@ export const uploadCertification = async (req, res) => {
       Road_map,
       image: uploadResponse.secure_url,
       publicId: uploadResponse.public_id,
+      certificationPdf: req.body.certificationPdf || null, // Add certificationPdf field
     });
 
     const savedCertification = await certification.save();
@@ -86,6 +89,7 @@ export const updateCertification = async (req, res) => {
       Course_Benefits_2,
       Course_Benefits_3,
       Road_map,
+      certificationPdf,
     } = req.body;
 
     if (!id) {
@@ -113,6 +117,7 @@ export const updateCertification = async (req, res) => {
     certification.Course_Benefits_2 = Course_Benefits_2 || certification.Course_Benefits_2;
     certification.Course_Benefits_3 = Course_Benefits_3 || certification.Course_Benefits_3;
     certification.Road_map = Road_map || certification.Road_map;
+    certification.certificationPdf = certificationPdf || certification.certificationPdf; // Update certificationPdf
 
     const updatedCertification = await certification.save();
     res.status(200).json(updatedCertification);

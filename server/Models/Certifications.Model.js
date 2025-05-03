@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 const CertificationSchema = new mongoose.Schema({
-
   title: { type: String, required: true },
   image: { type: String, required: true },
   publicId: { type: String, required: true }, // Ensure this field is defined and required
@@ -19,6 +18,7 @@ const CertificationSchema = new mongoose.Schema({
   Course_Benefits_2: { type: String },
   Course_Benefits_3: { type: String },
   Road_map: { type: [String] }, // Array of roadmap items
+  certificationPdf: { type: String }, // New field for storing the PDF URL or path
 });
 
 const Certification = mongoose.model("Certification", CertificationSchema);
