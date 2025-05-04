@@ -43,17 +43,37 @@ export default function CertificationFullDetails() {
     );
   }
 
-  const handleDownloadSyllabus = () => {
-    if (cert.certificationPdf) {
-      const link = document.createElement('a');
-      link.href = cert.certificationPdf;
-      link.download = `${cert.title.replace(/\s+/g, '_')}_certificationPdf.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+  const handleDownloadSyllabus = async () => {
+    if (id) {
+      try {
+        // Use the hook to fetch the syllabus
+        const response = await fetch(
+          `http://localhost:9000/api/v1/certifications/download-syllabus/${id}`
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch the syllabus file.");
+        }
+
+        // Convert the response to a Blob
+        const blob = await response.blob();
+
+        // Create a temporary anchor element
+        const link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.download = `${cert.title.replace(/\s+/g, "_")}_certificationSyllabus.pdf`;
+
+        // Append the link to the document, trigger the click, and remove the link
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch (error) {
+        console.error("Error downloading the syllabus:", error.message);
+      }
+    } else {
+      console.error("No certification ID found.");
     }
   };
-
   console.log("Selected Category:", cert.category);
   console.log("Available Categories:", Object.keys(cert));
   console.log("Certifications for category:", cert);

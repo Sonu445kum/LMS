@@ -56,6 +56,15 @@ export const certificationApi = createApi({
       }),
       invalidatesTags: ["Certifications"],
     }),
+
+    // Download certification syllabus
+    downloadCertificationSyllabus: builder.query({
+      query: (id) => ({
+        url: `/download-syllabus/${id}`,
+        method: "GET",
+        responseHandler: (response) => response.blob(), // Handle the response as a blob
+      }),
+    }),
   }),
 });
 
@@ -65,4 +74,5 @@ export const {
   useCreateCertificationMutation,
   useUpdateCertificationMutation,
   useDeleteCertificationMutation,
+  useDownloadCertificationSyllabusQuery, // Export the new query hook
 } = certificationApi;

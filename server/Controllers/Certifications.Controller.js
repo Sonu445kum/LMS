@@ -1,6 +1,49 @@
 import Certification from "../Models/Certifications.Model.js";
 import { uploadMedia, deleteMediaFromCloudinary } from "../Utils/Cloudinary.js";
 
+
+//Download the certifications data from the frontend assets folder and save it to the database
+import path from "path";
+import fs from "fs";
+
+// Download syllabus (PDF)
+export const downloadSyllabus = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Find the certification by ID
+    const certification = await Certification.findById(id);
+    if (!certification || !certification.certificationPdf) {
+      return res.status(404).json({ message: "Syllabus not found for this certification." });
+    }
+
+    // Check if the certificationPdf is a valid URL or a file path
+    const pdfPath = certification.certificationPdf.startsWith("http")
+      ? certification.certificationPdf
+      : path.join(__dirname, "../uploads", certification.certificationPdf);
+
+    // If it's a URL, redirect the user to the URL
+    if (certification.certificationPdf.startsWith("http")) {
+      return res.redirect(certification.certificationPdf);
+    }
+
+    // If it's a file path, check if the file exists
+    if (!fs.existsSync(pdfPath)) {
+      return res.status(404).json({ message: "Syllabus file not found on the server." });
+    }
+
+    // Send the file for download
+    res.download(pdfPath, `${certification.title.replace(/\s+/g, "_")}_Syllabus.pdf`, (err) => {
+      if (err) {
+        console.error("Error downloading file:", err.message);
+        res.status(500).json({ error: "Failed to download the syllabus." });
+      }
+    });
+  } catch (err) {
+    console.error("Error in downloadSyllabus:", err.message);
+    res.status(500).json({ error: "Server error", details: err.message });
+  }
+};
 // Upload a new certification
 export const uploadCertification = async (req, res) => {
   try {

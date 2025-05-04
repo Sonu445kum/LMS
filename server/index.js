@@ -25,6 +25,12 @@ const PORT = process.env.PORT || 8080;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+
+// Serve static files from the "uploads" directory
+
+
+
+
 // Serve static files from the "Config/frontend_assets" folder
 app.use("/frontend_assets", express.static(path.join(__dirname, "backendassets/frontend_assets")));
 // default middlewares
