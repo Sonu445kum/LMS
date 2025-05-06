@@ -31,25 +31,25 @@ const fileMappings = {
 // Map of IDs to file names
 router.get("/download-syllabus/:id", (req, res) => {
   const { id } = req.params;
-  console.log("Received ID:", id);
+  // console.log("Received ID:", id);
 
   const fileName = fileMappings[id];
   if (!fileName) {
-    console.error("Invalid ID:", id);
+    // console.error("Invalid ID:", id);
     return res.status(404).send("Syllabus file not found.");
   }
 
   const filePath = path.join(__dirname, "../backendassets/frontend_assets/pdfs", fileName);
-  console.log("Resolved file path:", filePath);
+  // console.log("Resolved file path:", filePath);
 
   if (!fs.existsSync(filePath)) {
-    console.error("File not found:", filePath);
+    
     return res.status(404).send("Syllabus file not found.");
   }
 
   res.download(filePath, (err) => {
     if (err) {
-      console.error("Error in downloadSyllabus:", err.message);
+      // console.error("Error in downloadSyllabus:", err.message);
       res.status(500).send("Error downloading the syllabus.");
     }
   });
