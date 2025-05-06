@@ -24,13 +24,15 @@
 
 import express from "express";
 import isAuthenticated from "../Middlewares/isAuthenticated.js";
-import { createCourse, createLecture, editCourse, editLecture, getCourseById, getCourseLecture, getCreatorCourses, getLectureById, getPublishedCourse, removeLecture, searchCourse, togglePublishCourse } from "../Controllers/Course.Controller.js";
+import { createCourse, createLecture, editCourse, editLecture, getCourseById, getCourseLecture, getCreatorCourses, getLectureById, getPublishedCourse,  removeLecture, searchCourse, togglePublishCourse } from "../Controllers/Course.Controller.js";
 import upload from "../Utils/Multer.js";
 const router = express.Router();
 
+
+
 router.route("/").post(isAuthenticated,createCourse);
 router.route("/search").get(isAuthenticated, searchCourse);
-router.route("/published-courses").get( getPublishedCourse);
+router.route("/published-courses").get(getPublishedCourse);
 router.route("/").get(isAuthenticated,getCreatorCourses);
 router.route("/:courseId").put(isAuthenticated,upload.single("courseThumbnail"),editCourse);
 router.route("/:courseId").get(isAuthenticated, getCourseById);

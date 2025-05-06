@@ -10,77 +10,172 @@
 //   SelectTrigger,
 //   SelectValue,
 // } from "@/components/ui/select";
-// import { Separator } from "@/components/ui/separator";
+// import { SlidersHorizontal } from "lucide-react";
+// import { motion } from "framer-motion";
+// import { useGetPublishedCourseQuery } from "@/Features/Api/courseApi";
 
-// const categories = [
-//   { id: "nextjs", label: "Next JS" },
-//   { id: "data science", label: "Data Science" },
-//   { id: "frontend development", label: "Frontend Development" },
-//   { id: "fullstack development", label: "Fullstack Development" },
-//   { id: "mern stack development", label: "MERN Stack Development" },
-//   { id: "backend development", label: "Backend Development" },
-//   { id: "javascript", label: "Javascript" },
-//   { id: "python", label: "Python" },
-//   { id: "docker", label: "Docker" },
-//   { id: "mongodb", label: "MongoDB" },
-//   { id: "html", label: "HTML" },
-// ];
-
-// const Filter = ({ handleFilterChange }) => {
+// const Filter = () => {
 //   const [selectedCategories, setSelectedCategories] = useState([]);
 //   const [sortByPrice, setSortByPrice] = useState("");
+//   const [categories, setCategories] = useState([]);
+//   const [filteredCourses, setFilteredCourses] = useState([]);
 
-//   // ✅ Trigger filter change after state updates
+//   // Fetch published courses
+//   const { data: courses, isLoading, isError } = useGetPublishedCourseQuery();
+
+//   // Extract unique categories from courses
 //   useEffect(() => {
-//     handleFilterChange(selectedCategories, sortByPrice);
-//   }, [selectedCategories, sortByPrice]);
+//     if (isError) {
+//       console.error("Failed to fetch courses");
+//       setCategories([]);
+//       return;
+//     }
 
+//     const courseList = Array.isArray(courses) ? courses : courses?.courses || [];
+//     if (courseList.length > 0) {
+//       const uniqueCategories = [
+//         ...new Set(
+//           courseList
+//             .map((course) => course.category)
+//             .filter((category) => category && category.trim() !== "")
+//         ),
+//       ];
+//       setCategories(uniqueCategories);
+//       setFilteredCourses(courseList); // Initially show all courses
+//     } else {
+//       console.error("Invalid courses data:", courses);
+//       setCategories([]);
+//       setFilteredCourses([]);
+//     }
+//   }, [courses, isLoading, isError]);
+
+//   // Filter courses based on selected categories
+//   useEffect(() => {
+//     const courseList = Array.isArray(courses) ? courses : courses?.courses || [];
+//     if (courseList.length === 0) {
+//       setFilteredCourses([]);
+//       return;
+//     }
+
+//     const filtered = courseList.filter((course) =>
+//       selectedCategories.length > 0
+//         ? selectedCategories.includes(course.category)
+//         : true
+//     );
+
+//     // Sort courses by price if sorting is applied
+//     if (sortByPrice === "low") {
+//       filtered.sort((a, b) => a.price - b.price);
+//     } else if (sortByPrice === "high") {
+//       filtered.sort((a, b) => b.price - a.price);
+//     }
+
+//     setFilteredCourses(filtered);
+//   }, [selectedCategories, sortByPrice, courses]);
+
+//   // Handle category selection
 //   const handleCategoryChange = (categoryId) => {
-//     setSelectedCategories((prevCategories) =>
-//       prevCategories.includes(categoryId)
-//         ? prevCategories.filter((id) => id !== categoryId)
-//         : [...prevCategories, categoryId]
+//     setSelectedCategories((prev) =>
+//       prev.includes(categoryId)
+//         ? prev.filter((id) => id !== categoryId)
+//         : [...prev, categoryId]
 //     );
 //   };
 
-//   const selectByPriceHandler = (selectedValue) => {
-//     setSortByPrice(selectedValue);
+//   // Handle sorting by price
+//   const selectByPriceHandler = (value) => {
+//     setSortByPrice(value);
 //   };
 
+//   if (isLoading) {
+//     return <p>Loading courses...</p>;
+//   }
+
+//   if (isError || (!Array.isArray(courses) && !Array.isArray(courses?.courses))) {
+//     return <p>Failed to load courses. Please try again later.</p>;
+//   }
+
 //   return (
-//     <div className=" mt-0 w-full md:w-[20%]">
-//       <div className="flex items-center justify-between">
-//         <h1 className="font-semibold text-lg md:text-xl">Filter Options</h1>
-//         <Select onValueChange={selectByPriceHandler}>
-//           <SelectTrigger>
-//             <SelectValue placeholder="Sort by" />
-//           </SelectTrigger>
-//           <SelectContent>
-//             <SelectGroup>
-//               <SelectLabel>Sort by price</SelectLabel>
-//               <SelectItem value="low">Low to High</SelectItem>
-//               <SelectItem value="high">High to Low</SelectItem>
-//             </SelectGroup>
-//           </SelectContent>
-//         </Select>
-//       </div>
-//       <Separator className="my-4" />
-//       <div>
-//         <h1 className="font-semibold mb-2">CATEGORY</h1>
-//         {categories.map((category) => (
-//           <div key={category.id} className="flex items-center space-x-2 my-2">
-//             <Checkbox
-//               id={category.id}
-//               onCheckedChange={() => handleCategoryChange(category.id)}
-//             />
-//             <Label
-//               htmlFor={category.id}
-//               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-//             >
-//               {category.label}
-//             </Label>
+//     <div className="flex flex-col md:flex-row gap-6">
+//       {/* Sidebar */}
+//       <motion.div
+//         initial={{ opacity: 0, y: -20 }}
+//         animate={{ opacity: 1, y: 0 }}
+//         transition={{ duration: 0.5 }}
+//         className="w-full md:w-[22%] bg-white/90 dark:bg-zinc-900/90 backdrop-blur-lg border border-gray-200 dark:border-gray-700 p-6 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all"
+//       >
+//         <div className="flex items-center justify-between mb-4">
+//           <h1 className="text-xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
+//             <SlidersHorizontal className="text-blue-600" size={22} /> Filters
+//           </h1>
+
+//           <Select onValueChange={selectByPriceHandler}>
+//             <SelectTrigger className="w-36 h-9 border border-gray-300 dark:border-gray-600 bg-white/80 dark:bg-zinc-800 hover:shadow-md transition">
+//               <SelectValue placeholder="Sort by" />
+//             </SelectTrigger>
+//             <SelectContent>
+//               <SelectGroup>
+//                 <SelectLabel className="text-gray-500">Sort by price</SelectLabel>
+//                 <SelectItem value="low">Low to High</SelectItem>
+//                 <SelectItem value="high">High to Low</SelectItem>
+//               </SelectGroup>
+//             </SelectContent>
+//           </Select>
+//         </div>
+
+//         <div className="h-[2px] w-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 mb-4 rounded-full" />
+
+//         <div>
+//           <h2 className="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-3">
+//             Categories
+//           </h2>
+
+//           <div className="space-y-3 max-h-[300px] overflow-y-auto pr-2 custom-scroll">
+//             {categories.map((category) => (
+//               <div
+//                 key={category}
+//                 className="flex items-center space-x-2 group px-2 py-1 rounded-md transition-all hover:bg-gradient-to-r hover:from-blue-100 hover:to-purple-100 dark:hover:from-zinc-800 dark:hover:to-zinc-700"
+//               >
+//                 <Checkbox
+//                   id={category}
+//                   checked={selectedCategories.includes(category)}
+//                   onCheckedChange={() => handleCategoryChange(category)}
+//                 />
+//                 <Label
+//                   htmlFor={category}
+//                   className="text-sm font-medium text-gray-800 dark:text-gray-300 cursor-pointer"
+//                 >
+//                   {category}
+//                 </Label>
+//               </div>
+//             ))}
 //           </div>
-//         ))}
+//         </div>
+//       </motion.div>
+
+//       {/* Main Content */}
+//       <div className="flex-1">
+//         <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
+//           Courses
+//         </h2>
+//         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+//           {filteredCourses.map((course) => (
+//             <div
+//               key={course._id}
+//               className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md bg-white dark:bg-zinc-900"
+//             >
+//               <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
+//                 {course.courseTitle}
+//               </h3>
+//               <p className="text-sm text-gray-600 dark:text-gray-400">
+//                 Category: {course.category}
+//               </p>
+//               <p className="text-sm text-gray-600 dark:text-gray-400">
+//                 Lectures: {course.lectures.length}
+//               </p>
+//             </div>
+//           ))}
+//         </div>
 //       </div>
 //     </div>
 //   );
@@ -101,32 +196,70 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
 import { SlidersHorizontal } from "lucide-react";
 import { motion } from "framer-motion";
+import { useGetPublishedCourseQuery } from "@/Features/Api/courseApi";
 
-const categories = [
-  { id: "nextjs", label: "Next JS" },
-  { id: "data science", label: "Data Science" },
-  { id: "frontend development", label: "Frontend Development" },
-  { id: "fullstack development", label: "Fullstack Development" },
-  { id: "mern stack development", label: "MERN Stack Development" },
-  { id: "backend development", label: "Backend Development" },
-  { id: "javascript", label: "Javascript" },
-  { id: "python", label: "Python" },
-  { id: "docker", label: "Docker" },
-  { id: "mongodb", label: "MongoDB" },
-  { id: "html", label: "HTML" },
-];
-
-const Filter = ({ handleFilterChange }) => {
+const Filter = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [sortByPrice, setSortByPrice] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [filteredCourses, setFilteredCourses] = useState([]);
 
+  // Fetch published courses
+  const { data: courses, isLoading, isError } = useGetPublishedCourseQuery();
+
+  // Extract unique categories from courses
   useEffect(() => {
-    handleFilterChange(selectedCategories, sortByPrice);
-  }, [selectedCategories, sortByPrice]);
+    if (isError) {
+      console.error("Failed to fetch courses");
+      setCategories([]);
+      return;
+    }
 
+    const courseList = Array.isArray(courses) ? courses : courses?.courses || [];
+    if (courseList.length > 0) {
+      const uniqueCategories = [
+        ...new Set(
+          courseList
+            .map((course) => course.category)
+            .filter((category) => category && category.trim() !== "")
+        ),
+      ];
+      setCategories(uniqueCategories);
+      setFilteredCourses(courseList); // Initially show all courses
+    } else {
+      console.error("Invalid courses data:", courses);
+      setCategories([]);
+      setFilteredCourses([]);
+    }
+  }, [courses, isLoading, isError]);
+
+  // Filter courses based on selected categories
+  useEffect(() => {
+    const courseList = Array.isArray(courses) ? courses : courses?.courses || [];
+    if (courseList.length === 0) {
+      setFilteredCourses([]);
+      return;
+    }
+
+    const filtered = courseList.filter((course) =>
+      selectedCategories.length > 0
+        ? selectedCategories.includes(course.category)
+        : true
+    );
+
+    // Sort courses by price if sorting is applied
+    if (sortByPrice === "low") {
+      filtered.sort((a, b) => a.price - b.price);
+    } else if (sortByPrice === "high") {
+      filtered.sort((a, b) => b.price - a.price);
+    }
+
+    setFilteredCourses(filtered);
+  }, [selectedCategories, sortByPrice, courses]);
+
+  // Handle category selection
   const handleCategoryChange = (categoryId) => {
     setSelectedCategories((prev) =>
       prev.includes(categoryId)
@@ -135,66 +268,105 @@ const Filter = ({ handleFilterChange }) => {
     );
   };
 
+  // Handle sorting by price
   const selectByPriceHandler = (value) => {
     setSortByPrice(value);
   };
 
+  if (isLoading) {
+    return <p>Loading courses...</p>;
+  }
+
+  if (isError || (!Array.isArray(courses) && !Array.isArray(courses?.courses))) {
+    return <p>Failed to load courses. Please try again later.</p>;
+  }
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="w-full md:w-[22%] bg-white/90 dark:bg-zinc-900/90 backdrop-blur-lg border border-gray-200 dark:border-gray-700 p-6 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all"
-    >
-      <div className=" flex items-center justify-between mb-4">
-        <h1 className="text-xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
-          <SlidersHorizontal className="text-blue-600" size={22} /> Filters
-        </h1>
+    <div className="flex flex-col gap-6">
+      {/* Sidebar */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="w-full md:w-[22%] bg-white/90 dark:bg-zinc-900/90 backdrop-blur-lg border border-gray-200 dark:border-gray-700 p-6 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all"
+      >
+        <div className="flex items-center justify-between mb-4">
+          <h1 className="text-xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
+            <SlidersHorizontal className="text-blue-600" size={22} /> Filters
+          </h1>
 
-        <Select onValueChange={selectByPriceHandler}>
-          <SelectTrigger className="w-36 h-9 border border-gray-300 dark:border-gray-600 bg-white/80 dark:bg-zinc-800 hover:shadow-md transition">
-            <SelectValue placeholder="Sort by" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel className="text-gray-500">Sort by price</SelectLabel>
-              <SelectItem value="low">Low to High</SelectItem>
-              <SelectItem value="high">High to Low</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      </div>
+          <Select onValueChange={selectByPriceHandler}>
+            <SelectTrigger className="w-36 h-9 border border-gray-300 dark:border-gray-600 bg-white/80 dark:bg-zinc-800 hover:shadow-md transition">
+              <SelectValue placeholder="Sort by" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel className="text-gray-500">Sort by price</SelectLabel>
+                <SelectItem value="low">Low to High</SelectItem>
+                <SelectItem value="high">High to Low</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
 
-      <div className="h-[2px] w-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 mb-4 rounded-full" />
+        <div className="h-[2px] w-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 mb-4 rounded-full" />
 
-      <div>
-        <h2 className="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-3">
-          Categories
-        </h2>
+        <div>
+          <h2 className="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-3">
+            Categories
+          </h2>
 
-        <div className="space-y-3 max-h-[300px] overflow-y-auto pr-2 custom-scroll">
-          {categories.map((category) => (
-            <div
-              key={category.id}
-              className="flex items-center space-x-2 group px-2 py-1 rounded-md transition-all hover:bg-gradient-to-r hover:from-blue-100 hover:to-purple-100 dark:hover:from-zinc-800 dark:hover:to-zinc-700"
-            >
-              <Checkbox
-                id={category.id}
-                onCheckedChange={() => handleCategoryChange(category.id)}
-              />
-              <Label
-                htmlFor={category.id}
-                className="text-sm font-medium text-gray-800 dark:text-gray-300 cursor-pointer"
+          <div className="space-y-3 max-h-[300px] overflow-y-auto pr-2 custom-scroll">
+            {categories.map((category) => (
+              <div
+                key={category}
+                className="flex items-center space-x-2 group px-2 py-1 rounded-md transition-all hover:bg-gradient-to-r hover:from-blue-100 hover:to-purple-100 dark:hover:from-zinc-800 dark:hover:to-zinc-700"
               >
-                {category.label}
-              </Label>
+                <Checkbox
+                  id={category}
+                  checked={selectedCategories.includes(category)}
+                  onCheckedChange={() => handleCategoryChange(category)}
+                />
+                <Label
+                  htmlFor={category}
+                  className="text-sm font-medium text-gray-800 dark:text-gray-300 cursor-pointer"
+                >
+                  {category}
+                </Label>
+              </div>
+            ))}
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Main Content */}
+      <div>
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
+          Courses
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {filteredCourses.map((course) => (
+            <div
+              key={course._id}
+              className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md bg-white dark:bg-zinc-900 flex flex-col justify-between"
+            >
+              <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
+                {course.courseTitle}
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                Category: {course.category}
+              </p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Lectures: {course.lectures.length}
+              </p>
             </div>
           ))}
         </div>
       </div>
-    </motion.div>
+
+      
+    </div>
   );
 };
 
 export default Filter;
-

@@ -43,7 +43,7 @@ function PrevArrow({ onClick }) {
       className="absolute left-6 top-1/2 z-30 transform -translate-y-1/2 cursor-pointer text-white bg-black/40 p-2 rounded-full"
       onClick={onClick}
     >
-      <ArrowLeft size={24} />
+      <ArrowLeft size={24} className="z-30" />
     </div>
   );
 }
@@ -96,7 +96,7 @@ function HeroCarousel() {
   }, []);
 
   return (
-    <div className="mt-0 relative text-center">
+    <div className="mt-0 w-[100vw] relative text-center">
       {/* Top Stats Bar */}
       <div className="absolute top-0 left-0 right-0 bg-white/90 z-10 py-4 shadow-md">
         <div className="container mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 text-center text-sm">
@@ -200,3 +200,5 @@ function HeroCarousel() {
 }
 
 export default HeroCarousel;
+
+

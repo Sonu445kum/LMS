@@ -3,6 +3,8 @@ import { Course } from "../Models/Course.Model.js";
 import { Lecture } from "../Models/Lecture.Model.js";
 import {deleteMediaFromCloudinary, deleteVideoFromCloudinary, uploadMedia} from "../Utils/Cloudinary.js";
 
+
+
 export const createCourse = async (req,res) => {
     try {
         const {courseTitle, category} = req.body;

@@ -101,10 +101,10 @@ const Login = () => {
       <div className=" py-5 bg-[#415974] relative z-10 backdrop-blur-md border border-white/30 shadow-2xl rounded-xl p-6 w-full max-w-md animate-fade-in-down">
         <Tabs defaultValue="Login" className="w-full">
           <TabsList className="grid w-full grid-cols-2 bg-white/20  backdrop-blur-md border border-white/30 rounded-xl shadow-md">
-            <TabsTrigger value="Signup" className="-py-1 text-lg font-semibold text-black hover:bg-white/10 transition">
+            <TabsTrigger value="Signup" className="-mt-1 text-lg font-semibold text-black hover:bg-white/10 transition">
               Signup
             </TabsTrigger>
-            <TabsTrigger value="Login" className="py-1 text-lg font-semibold text-black hover:bg-white/10 transition">
+            <TabsTrigger value="Login" className="-mt-1 -px-1 text-lg font-semibold text-black hover:bg-white/10 transition">
               Login
             </TabsTrigger>
           </TabsList>
@@ -118,14 +118,14 @@ const Login = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label htmlFor="name" className="text-white">Name</Label>
+                  <Label htmlFor="name" className="text-white gap-2">Name</Label>
                   <Input
                     type="text"
                     name="name"
                     value={signupInput.name}
                     onChange={(e) => changeInputHandler(e, "signup")}
                     placeholder="John Doe"
-                    className="rounded-lg bg-white/70 focus:ring-2 focus:ring-blue-500"
+                    className="rounded-lg bg-white/70 focus:ring-2 focus:ring-blue-500 mt-2"
                     required
                   />
                 </div>
@@ -137,7 +137,7 @@ const Login = () => {
                     value={signupInput.email}
                     onChange={(e) => changeInputHandler(e, "signup")}
                     placeholder="john@example.com"
-                    className="rounded-lg bg-white/70 focus:ring-2 focus:ring-blue-500"
+                    className="rounded-lg bg-white/70 focus:ring-2 focus:ring-blue-500 mt-2"
                     required
                   />
                 </div>
@@ -149,7 +149,7 @@ const Login = () => {
                     value={signupInput.password}
                     onChange={(e) => changeInputHandler(e, "signup")}
                     placeholder="••••••••"
-                    className="rounded-lg bg-white/70 focus:ring-2 focus:ring-blue-500"
+                    className="rounded-lg bg-white/70 focus:ring-2 focus:ring-blue-500 mt-2"
                     required
                   />
                 </div>
@@ -188,7 +188,7 @@ const Login = () => {
                     value={loginInput.email}
                     onChange={(e) => changeInputHandler(e, "login")}
                     placeholder="john@example.com"
-                    className="rounded-lg bg-white/70 focus:ring-2 focus:ring-blue-500"
+                    className="rounded-lg bg-white/70 focus:ring-2 focus:ring-blue-500 mt-2"
                   />
                 </div>
                 <div>
@@ -199,7 +199,7 @@ const Login = () => {
                     value={loginInput.password}
                     onChange={(e) => changeInputHandler(e, "login")}
                     placeholder="••••••••"
-                    className="rounded-lg bg-white/70 focus:ring-2 focus:ring-blue-500"
+                    className="rounded-lg bg-white/70 focus:ring-2 focus:ring-blue-500 mt-2"
                     required
                   />
                 </div>
