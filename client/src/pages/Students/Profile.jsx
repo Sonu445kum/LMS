@@ -289,7 +289,7 @@ const Profile = () => {
                 whileHover={{ scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <Course course={course} />
+                <Course course={course} key={course._id} />
               </motion.div>
             ))
           )}
