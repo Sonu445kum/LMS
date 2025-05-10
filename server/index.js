@@ -15,7 +15,7 @@ import mediaRoutes from "./Routes/Media.Route.js";
 import CoursePurchaseRoutes from "./Routes/CoursePurchase.Route.js";
 import CourseProgressRoutes from "./Routes/CourseProgress.Route.js";
 import CertificationsRoutes from "./Routes/Certifications.Route.js";
-dotenv.config();
+dotenv.config({});
 
 connectDB();
 const PORT = process.env.PORT || 8080;
@@ -24,10 +24,6 @@ const PORT = process.env.PORT || 8080;
 // Get the directory name
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-
-// Serve static files from the "uploads" directory
-
 
 
 
@@ -43,9 +39,6 @@ app.use(cors(
     }
 ));
 
-app.get("/", (req, res) => {
-    res.send("Hello, World!");
-})
 
 // All Api
 app.use("/api/v1/user",userRoutes);
@@ -55,6 +48,12 @@ app.use("/api/v1/media",mediaRoutes);
 app.use("/api/v1/purchase",CoursePurchaseRoutes);
 app.use("/api/v1/progress", CourseProgressRoutes);
 
+// Serve static files from the "uploads" directory
+const _dirname = path.resolve();
+app.use(express.static(path.join(_dirname,"/client/dist")));
+app.get("*", (_, res) => {
+    res.sendFile(path.join(_dirname, "client", "dist", "index.html"));
+});
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

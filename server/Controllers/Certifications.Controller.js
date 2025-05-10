@@ -47,8 +47,8 @@ export const downloadSyllabus = async (req, res) => {
 // Upload a new certification
 export const uploadCertification = async (req, res) => {
   try {
-    console.log("Request body:", req.body);
-    console.log("Uploaded file:", req.file);
+    // console.log("Request body:", req.body);
+    // console.log("Uploaded file:", req.file);
 
     const {
       id,
@@ -112,8 +112,8 @@ export const uploadCertification = async (req, res) => {
 // Update a certification
 export const updateCertification = async (req, res) => {
   try {
-    console.log("Request Params:", req.params); // Log the route parameters
-    console.log("Request Body:", req.body); // Log the request body
+    // console.log("Request Params:", req.params); // Log the route parameters
+    // console.log("Request Body:", req.body); // Log the request body
 
     const { id } = req.params;
     const {
