@@ -1,6 +1,4 @@
 
-
-
 // import express from "express";
 // import isAuthenticated from "../Middlewares/isAuthenticated.js";
 // import { createCourse, createLecture, editCourse, editLecture, getCourseById, getCourseLecture, getCreatorCourses, getLectureById, getPublishedCourse,  removeLecture, searchCourse, togglePublishCourse } from "../Controllers/Course.Controller.js";
@@ -44,6 +42,5 @@ router.route("/:courseId/lecture/:lectureId").post(isAuthenticated, editLecture)
 router.route("/lecture/:lectureId").delete(isAuthenticated, removeLecture);
 router.route("/lecture/:lectureId").get(isAuthenticated, getLectureById);
 router.route("/:courseId").patch(isAuthenticated, togglePublishCourse);
-
 
 export default router;
