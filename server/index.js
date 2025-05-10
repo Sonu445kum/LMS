@@ -34,7 +34,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors(
     {
-        origin: ["http://localhost:5173","https://lms-3-2x5e.onrender.com"],
+        origin: ["http://localhost:5173","https://lms-5-far4.onrender.com"],
         credentials: true
     }
 ));
