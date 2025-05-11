@@ -35,7 +35,7 @@ const DisplayCertificates = () => {
     if (!imagePath) return "/placeholder.png";
     return imagePath.startsWith("http")
       ? imagePath
-      : `http://localhost:9000${imagePath}`;
+      : `https://lms-5-far4.onrender.com${imagePath}`;
   };
 
   // Filter certifications based on selected categories and search query

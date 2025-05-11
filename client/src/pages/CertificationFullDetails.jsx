@@ -48,7 +48,7 @@ export default function CertificationFullDetails() {
       try {
         // Use the hook to fetch the syllabus
         const response = await fetch(
-          `http://localhost:9000/api/v1/certifications/download-syllabus/${id}`
+          `https://lms-5-far4.onrender.com/api/v1/certifications/download-syllabus/${id}`
         );
 
         if (!response.ok) {
