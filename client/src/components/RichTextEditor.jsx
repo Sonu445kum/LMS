@@ -29,29 +29,54 @@
 
 // new code 
 // RichTextEditor.jsx
-import React, { useEffect } from 'react';
-import { useQuill } from 'react-quilljs';
-import 'quill/dist/quill.snow.css';
+// import React, { useEffect } from 'react';
+// import { useQuill } from 'react-quilljs';
+// import 'quill/dist/quill.snow.css';
+
+// const RichTextEditor = ({ input, setInput }) => {
+//   const { quill, quillRef } = useQuill();
+
+//   useEffect(() => {
+//     if (quill) {
+//       quill.on('text-change', () => {
+//         const html = quill.root.innerHTML;
+//         setInput((prev) => ({
+//           ...prev,
+//           description: html,
+//         }));
+//       });
+//     }
+//   }, [quill, setInput]);
+
+//   return (
+//     <div>
+//       <div style={{ width: '100%', height: '200px' }} ref={quillRef} />
+//     </div>
+//   );
+// };
+
+// export default RichTextEditor;
+
+
+// RichTextEditor.jsx
+import React from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const RichTextEditor = ({ input, setInput }) => {
-  const { quill, quillRef } = useQuill();
-
-  useEffect(() => {
-    if (quill) {
-      quill.on('text-change', () => {
-        const html = quill.root.innerHTML;
-        setInput((prev) => ({
-          ...prev,
-          description: html,
-        }));
-      });
-    }
-  }, [quill, setInput]);
+  const handleChange = (content, delta, source, editor) => {
+    setInput((prev) => ({
+      ...prev,
+      description: content,
+    }));
+  };
 
   return (
-    <div>
-      <div style={{ width: '100%', height: '200px' }} ref={quillRef} />
-    </div>
+    <ReactQuill
+      value={input.description || ''}
+      onChange={handleChange}
+      style={{ height: '200px' }}
+    />
   );
 };
 

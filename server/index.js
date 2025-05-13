@@ -35,6 +35,7 @@ app.use(cookieParser());
 app.use(cors(
     {
         origin: ["https://lms-5-far4.onrender.com"],
+        methods: ["GET", "POST", "PUT", "DELETE"],
         credentials: true
     }
 ));
