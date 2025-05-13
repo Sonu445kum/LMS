@@ -125,8 +125,9 @@ const Login = () => {
                     value={signupInput.name}
                     onChange={(e) => changeInputHandler(e, "signup")}
                     placeholder="John Doe"
-                    className="rounded-lg bg-white/70 focus:ring-2 focus:ring-blue-500 mt-2"
                     required
+                    className="rounded-lg bg-white/70 focus:ring-2 focus:ring-blue-500 mt-2"
+                    
                   />
                 </div>
                 <div>
@@ -137,8 +138,9 @@ const Login = () => {
                     value={signupInput.email}
                     onChange={(e) => changeInputHandler(e, "signup")}
                     placeholder="john@example.com"
-                    className="rounded-lg bg-white/70 focus:ring-2 focus:ring-blue-500 mt-2"
                     required
+                    className="rounded-lg bg-white/70 focus:ring-2 focus:ring-blue-500 mt-2"
+                   
                   />
                 </div>
                 <div>
@@ -149,8 +151,9 @@ const Login = () => {
                     value={signupInput.password}
                     onChange={(e) => changeInputHandler(e, "signup")}
                     placeholder="••••••••"
-                    className="rounded-lg bg-white/70 focus:ring-2 focus:ring-blue-500 mt-2"
                     required
+                    className="rounded-lg bg-white/70 focus:ring-2 focus:ring-blue-500 mt-2"
+                    
                   />
                 </div>
               </CardContent>
@@ -199,8 +202,9 @@ const Login = () => {
                     value={loginInput.password}
                     onChange={(e) => changeInputHandler(e, "login")}
                     placeholder="••••••••"
-                    className="rounded-lg bg-white/70 focus:ring-2 focus:ring-blue-500 mt-2"
                     required
+                    className="rounded-lg bg-white/70 focus:ring-2 focus:ring-blue-500 mt-2"
+                   
                   />
                 </div>
               </CardContent>
